@@ -13,7 +13,7 @@ router.post('/registro', function (req, res, next) {
       displayName: `${name} ${surname}`,
     })
     .then(data => {
-      res.status(200)
+      res.status(200).json(data.toJSON())
       console.log('Successfully updated user', data.toJSON());
     })
     .catch(err => {
