@@ -32,8 +32,9 @@ router.post('/login', function (req, res, next) {
     console.log(user)
     res.end()
   })
-  .catch((error) => {
-    res.code(500).json(error)
+    .catch((error) => {
+    console.log(error)
+    res.code(500).json(error).end()
   });
 
 });
