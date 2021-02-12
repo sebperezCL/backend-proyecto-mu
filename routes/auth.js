@@ -13,13 +13,6 @@ router.post('/registro', function (req, res, next) {
       displayName: `${name} ${surname}`,
     })
     .then(data => {
-      let dataAux;
-      admin.generateSignInWithEmailLink(email).then(data => {
-        dataAux = data
-      }).catch(err => {
-        res.status(500).json(err.message).end()
-        console.log(err)
-      })
       console.log('Successfully updated user', data.toJSON());
       res.status(200).json(data.toJSON()).end()
     })
