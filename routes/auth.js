@@ -33,7 +33,7 @@ router.post('/login', function (req, res, next) {
     res.end()
   })
   .catch((error) => {
-    res.code(500).json(error.message)
+    res.code(500).json(error)
   });
 
 });
