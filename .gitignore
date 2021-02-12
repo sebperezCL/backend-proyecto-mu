@@ -30,14 +30,7 @@ coverage
 
 # Bower dependency directory (https://bower.io/)
 bower_components
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
-# Dependency directories
+mu-proyecto-d4298-firebase-adminsdk-922pe-a8d33a27e9.json# Dependency directories
 node_modules/
 jspm_packages/
 
@@ -103,3 +96,4 @@ dist
 # TernJS port file
 .tern-port
 package-lock.json
+mu-proyecto-d4298-firebase-adminsdk-922pe-a8d33a27e9.json
