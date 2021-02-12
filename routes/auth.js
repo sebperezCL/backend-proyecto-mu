@@ -17,14 +17,14 @@ router.post('/registro', function (req, res, next) {
       admin.generateSignInWithEmailLink(email).then(data => {
         dataAux = data
       }).catch(err => {
-        res.status(err.code).json(err.message).end()
+        res.status(500).json(err.message).end()
         console.log(err)
       })
       console.log('Successfully updated user', data.toJSON());
       res.status(200).json(data.toJSON()).end()
     })
     .catch(err => {
-      res.status(err.code).json(err.message)
+      res.status(500).json(err.message)
       console.log(err);
     });
 });
@@ -40,7 +40,7 @@ router.post('/login', function (req, res, next) {
     res.end()
   })
   .catch((error) => {
-    res.code(error.code).json(error.message)
+    res.code(500).json(error.message)
   });
 
 });
