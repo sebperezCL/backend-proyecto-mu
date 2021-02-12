@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const admin = require('../firebaseAuth/adminFirebase');
 
-router.post('/auth/registro', function (req, res, next) {
+router.post('/registro', function (req, res, next) {
   const { email, password, name, surname } = req.body;
   admin
     .auth()
