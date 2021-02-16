@@ -97,3 +97,6 @@ dist
 .tern-port
 package-lock.json
 mu-proyecto-d4298-firebase-adminsdk-922pe-a8d33a27e9.json
+
+# Enviroment variables
+.env
