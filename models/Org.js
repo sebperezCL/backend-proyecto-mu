@@ -54,7 +54,7 @@ const orgSchema = mongoose.Schema({
           nroCheque: String,
         },
       ],
-      egreso: [
+      egreso: [ // Gastos
         {
           id: Number,
           fecha: Date,
