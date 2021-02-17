@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const auth = require('./routes/auth');
-const usersRouter = require('./routes/users');
+const auth = require('./routes/apiV1/auth');
+const usersRouter = require('./routes/apiV1/users');
 
 const app = express();
 
@@ -39,6 +39,21 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+
+  /**
+   * Respuesta estándar de errores
+   */
+  if (req.originalUrl.startsWith('/api/')) {
+    // Error que viene de la API
+    res.json({
+      status: 'error',
+      data: err.alert || null,
+      message: err.message,
+      errorCode: err.status,
+    });
+    return;
+  }
+
   res.json({ error: err });
 });
 
