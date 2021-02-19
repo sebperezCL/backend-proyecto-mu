@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
   {
+    uidFirebase: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       unique: true,
@@ -20,7 +25,6 @@ const userSchema = mongoose.Schema(
     },
     apellidoMaterno: {
       type: String,
-      required: [true, 'Apellido no puede ser vacio'],
     },
     fiscalId: {
       type: String,

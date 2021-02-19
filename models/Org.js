@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const orgSchema = mongoose.Schema({
-  codigoId: {
+  orgId: {
     // Puede corresponder al identificador fiscal
     type: String,
     index: true,
@@ -54,7 +54,8 @@ const orgSchema = mongoose.Schema({
           nroCheque: String,
         },
       ],
-      egreso: [ // Gastos
+      egreso: [
+        // Gastos
         {
           id: Number,
           fecha: Date,
