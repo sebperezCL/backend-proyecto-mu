@@ -1,26 +1,45 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
 const admin = require('../../firebaseAuth/adminFirebase');
+const formatoResponse = require('../lib/formatoResponse');
+const { createUser } = require('../../controllers/usersController');
 
 router.post('/registro', function (req, res, next) {
-  const { email, password, name, surname } = req.body;
+  const { email, password, name, surname, organization, taxNumber } = req.body;
+
   admin
     .auth()
     .createUser({
       email: email,
       emailVerified: false,
       password: password,
-      displayName: `${name} ${surname}`,
+      surname: surname,
+      organization: organization,
+      taxNumber: taxNumber,
+      displayName: `${name} ${surname} `,
     })
     .then(data => {
+      console.log(data)
       console.log('Successfully updated user', data.toJSON());
-      res.status(200).json(data.toJSON()).end();
+      res
+        .status(201)
+        .json(
+          formatoResponse(
+            'succes',
+            data.toJSON(),
+            'User successfully activated'
+          )
+        )
+        .end();
     })
     .catch(err => {
       console.log(err);
       return createError(500, err.message);
     });
+
+    //createUser()
 });
 
 router.post('/login', function (req, res, next) {
