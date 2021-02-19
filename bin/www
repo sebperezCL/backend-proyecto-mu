@@ -12,7 +12,12 @@ const http = require("http");
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || "5000");
+
+ // Porfavor no cambiar el puerto, la confioguracion de los servidores se hizo para el 3000
+ // si vas a usar ponerlo en el fichero .ENV PORT=3000 o por comando
+ // Gracias
+
+const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
 /**

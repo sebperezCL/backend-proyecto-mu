@@ -3,7 +3,7 @@ var router = express.Router();
 const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
-const userController = require('../../controllers/users.controller');
+const userController = require('../../controllers/usersController');
 
 //! FALTA AGREGAR LOS MIDDLEWARES DE AUTENTICACION y ROLES
 
