@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
 const admin = require('../../firebaseAuth/adminFirebase');
-const formatoResponse = require('../lib/formatoResponse');
+const formatoResponse = require('../../lib/formatoResponse');
 const { createUser } = require('../../controllers/usersController');
 
 router.post('/registro', function (req, res, next) {
