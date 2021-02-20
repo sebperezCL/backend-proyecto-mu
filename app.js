@@ -14,6 +14,8 @@ require('./lib/connectMongoose');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+
+// EJS Para qué??--------------------------------------------------------------------------------------<
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));

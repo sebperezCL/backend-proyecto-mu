@@ -3,15 +3,12 @@
 const User = require('../models/User');
 const formatoResponse = require('../lib/formatoResponse');
 
-
-
 /**
  * @description Crea un nuevo usuario en la db, los datos del usuario
  * @function
  * @param Object User
  * @returns Promise
  */
-
 
 function createUser(user) {
   return new Promise((reject, resolve) => {
@@ -21,10 +18,10 @@ function createUser(user) {
           resolve(
             User.create(user, (err, response) => {
               if (err) reject({ error: error });
-              response
+              response;
             })
           );
-        const errorUserExist = new Error(`User ${data.email} already exists`);
+        const errorUserExist = new Error(`User ${data.email} already exists.`);
         errorUserExist.code = 'USER_EXIST';
         reject(errorUserExist);
       })
@@ -49,7 +46,7 @@ async function enableUser(req, res, next) {
 
     res
       .status(200)
-      .json(formatoResponse('success', user, 'User successfully activated'));
+      .json(formatoResponse('success', user, 'User successfully activated.'));
   } catch (error) {
     return next(createError(500, error.message));
   }
@@ -63,16 +60,14 @@ async function disableUser(req, res, next) {
     const usuario = await User.findOne({ email: req.body.email });
 
     if (!usuario)
-      return next(createError(500, 'The user does NOT exist in the database'));
+      return next(createError(500, 'The user does NOT exist in the database.'));
 
     usuario.activo = false;
     await usuario.save();
 
     res
       .status(200)
-      .json(
-        formatoResponse('success', user, 'Usuario deshabilitado con éxito')
-      );
+      .json(formatoResponse('success', user, 'User successfully disabled.'));
   } catch (error) {
     return next(createError(500, error.message));
   }
