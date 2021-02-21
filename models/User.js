@@ -17,13 +17,13 @@ const userSchema = mongoose.Schema(
     },
     nombres: {
       type: String,
-      required: [true, 'Nombre no puede ser vacio'],
+      required: [true, 'Name cannot be empty'],
     },
-    apellidoPaterno: {
+    firstSurname: {
       type: String,
-      required: [true, 'Apellido no puede ser vacio'],
+      required: [true, 'Surname cannot be empty'],
     },
-    apellidoMaterno: {
+    secondSurname: {
       type: String,
     },
     fiscalId: {
@@ -49,7 +49,7 @@ const userSchema = mongoose.Schema(
           'Secretario',
           'Miembro',
         ],
-        message: 'No se puede ingresar otro rol',
+        message: 'You cannot enter another role',
       },
     },
     contacto: {

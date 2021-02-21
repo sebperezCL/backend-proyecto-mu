@@ -10,31 +10,25 @@ const userController = require('../../controllers/usersController');
 router.post(
   '/',
   [
-    body('uidFirebase', 'Debe indicar el id del usuario').notEmpty(),
-    body('email', 'Debe indicar el email del usuario').notEmpty(),
-    body('nombres', 'Debe indicar los nombres del usuario').notEmpty(),
-    body(
-      'apellidoPaterno',
-      'Debe indicar el apellido paterno del usuario'
-    ).notEmpty(),
-    body('apellidoMaterno').isString(),
-    body(
-      'fiscalId',
-      'Debe indicar el identificador fiscal del usuario'
-    ).notEmpty(),
+    body('uidFirebase', 'Indicate the user id').notEmpty(),
+    body('email', "Indicate the user's email address").notEmpty(),
+    body('names', 'Indicate the names of the user').notEmpty(),
+    body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
+    body('secondSurname').isString(),
+    body('fiscalId', "Indicate the user's fiscal id").notEmpty(),
   ],
   fieldsValidator,
   userController.createUser
 );
 
 router.put('/enable', [
-  body('email', 'Debe indicar el email del usuario').notEmpty(),
+  body('email', "Indicate the user's email address").notEmpty(),
   fieldsValidator,
   userController.enableUser,
 ]);
 
 router.put('/disable', [
-  body('email', 'Debe indicar el email del usuario').notEmpty(),
+  body('email', "Indicate the user's email address").notEmpty(),
   fieldsValidator,
   userController.disableUser,
 ]);

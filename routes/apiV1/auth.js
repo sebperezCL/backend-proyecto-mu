@@ -7,7 +7,14 @@ const formatoResponse = require('../../lib/formatoResponse');
 const { createUser } = require('../../controllers/usersController');
 
 router.post('/registro', function (req, res, next) {
-  const { email, password, name, surname, organization, taxNumber } = req.body;
+  const {
+    email,
+    password,
+    name,
+    surname,
+    organization,
+    fiscalNumber,
+  } = req.body;
 
   admin
     .auth()
@@ -17,11 +24,11 @@ router.post('/registro', function (req, res, next) {
       password: password,
       surname: surname,
       organization: organization,
-      taxNumber: taxNumber,
+      fiscalNumber: fiscalNumber,
       displayName: `${name} ${surname} `,
     })
     .then(data => {
-      console.log(data)
+      console.log(data);
       console.log('Successfully updated user', data.toJSON());
       res
         .status(201)
@@ -39,7 +46,7 @@ router.post('/registro', function (req, res, next) {
       return createError(500, err.message);
     });
 
-    //createUser()
+  //createUser()
 });
 
 router.post('/login', function (req, res, next) {
