@@ -10,60 +10,60 @@ const orgSchema = mongoose.Schema({
     unique: true,
     required: true,
   },
-  nombre: {
+  name: {
     type: String,
     index: true,
     required: true,
   },
-  fundacion: Date,
-  presidente: {
+  foundationDate: Date,
+  president: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  tesorero: {
+  treasurer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  secretario: {
+  secretary: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  direccion: String,
-  ciudad: String,
-  provincia: String,
-  pais: String,
-  periodo: [
+  address: String,
+  city: String,
+  province: String,
+  country: String,
+  fiscalYear: [
     {
       year: Number,
-      cuotaAnual: [
+      feePerYear: [
         {
           // En un año pueden haber muchos tipos de cuotas distintas, una estándar y varias especiales
-          descripcion: String,
-          valor: Number,
-          default: Boolean, // indica si es la cuota por defecto para el año indicado
+          description: String,
+          amount: Number,
+          defaultFee: Boolean, // indica si es la cuota por defecto para el año indicado
         },
       ],
-      abono: [
+      payment: [
         {
           user: String,
           id: Number,
-          fecha: Date,
-          monto: Number,
-          medioPago: String,
-          banco: String,
-          nroCheque: String,
+          date: Date,
+          amount: Number,
+          paymentMethod: String,
+          checkNumber: String,
+          bank: String,
         },
       ],
-      egreso: [
+      expense: [
         // Gastos
         {
           id: Number,
-          fecha: Date,
-          monto: Number,
-          medioPago: String,
-          banco: String,
-          nroCheque: String,
-          descripcion: String,
+          date: Date,
+          amount: Number,
+          paymentMethod: String,
+          bank: String,
+          checkNumber: String,
+          description: String,
         },
       ],
     },

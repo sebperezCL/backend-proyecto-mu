@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema(
       index: true,
       required: true,
     },
-    nombres: {
+    names: {
       type: String,
       required: [true, 'Name cannot be empty'],
     },
@@ -32,52 +32,46 @@ const userSchema = mongoose.Schema(
       index: true,
       required: true,
     },
-    activo: {
+    active: {
       type: Boolean,
       required: true,
       default: false,
     },
-    foto: String, // ruta a fotografía del usuario
+    photo: String, // ruta a fotografía del usuario
     role: {
       type: String,
-      default: 'Miembro',
+      default: 'Member',
       enum: {
-        values: [
-          'SuperAdmin',
-          'Tesorero',
-          'Presidente',
-          'Secretario',
-          'Miembro',
-        ],
+        values: ['SuperAdmin', 'Treasurer', 'President', 'Secretary', 'Member'],
         message: 'You cannot enter another role',
       },
     },
-    contacto: {
-      direccion: String,
-      fonoCasa: String,
-      fonoOficina: String,
+    contact: {
+      address: String,
+      homePhone: String,
+      officePhone: String,
     },
-    orgMiembro: [
+    organizations: [
       {
-        nombre: String,
-        codigoId: String,
-        periodo: [
+        name: String,
+        orgId: String,
+        fiscalYear: [
           {
             year: Number,
-            condicion: String,
-            eximido: Boolean,
-            valorAnual: {
-              monto: Number,
-              descripcion: String,
+            condition: String,
+            exempt: Boolean,
+            feePerYear: {
+              amount: Number,
+              description: String,
             },
-            abono: [
+            payment: [
               {
-                id: Number,
-                fecha: Date,
-                monto: Number,
-                medioPago: String,
-                banco: String,
-                nroCheque: String,
+                paymentId: Number,
+                date: Date,
+                amount: Number,
+                paymentMethod: String,
+                bank: String,
+                checkNumber: String,
               },
             ],
           },
