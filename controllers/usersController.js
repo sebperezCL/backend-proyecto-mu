@@ -17,8 +17,8 @@ function createUser(user) {
         data ||
           resolve(
             User.create(user, (err, response) => {
-              if (err) reject({ error: error });
-              response;
+              if (err) reject({ error: err });
+              return response;
             })
           );
         const errorUserExist = new Error(`User ${data.email} already exists.`);
