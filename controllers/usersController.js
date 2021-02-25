@@ -28,7 +28,8 @@ async function createUser(req, res, next) {
       .status(200)
       .json(formatoResponse('success', user, 'Usuario creado con éxito'));
   } catch (error) {
-    return next(createError(500, error.message));
+    console.log(error, 'dentro del error')
+    //return next(createError(500, error.message));
   }
 }
 
