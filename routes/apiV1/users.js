@@ -16,6 +16,7 @@ router.post(
     body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
     body('secondSurname').isString(),
     body('fiscalId', "Indicate the user's fiscal id").notEmpty(),
+    body('organization', "Indicate the user's organization").notEmpty()
   ],
   fieldsValidator,
   userController.createUser
