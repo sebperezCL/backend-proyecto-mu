@@ -1,98 +1,83 @@
 'use strict';
 
 const User = require('../models/User');
+const createError = require('http-errors');
+const { matchedData } = require('express-validator');
+
+const { user } = require('../lib/connectMongoose');
 const formatoResponse = require('../lib/formatoResponse');
 
-
 /**
- * @description Funcion factoria de errores
- * @param message
- * @param code
- * @returns new Error
- * 
+ * Crea un nuevo usuario en la db, los datos del usuario
+ * vienen en el body
  */
+async function createUser(req, res, next) {
+  try {
+    const data = matchedData(req);
+    console.log(data);
 
-const createError = (message, code) => {
-  const error = new Error(message)
-  error.code = code
-  return error
-}
+    const usuario = await User.findOne({ email: data.email });
 
+    if (usuario)
+      return next(createError(500, 'El usuario ya existe en la base de datos'));
 
-/**
- * @description Crea un nuevo usuario en la db, los datos del usuario
- * @function
- * @param Object User
- * @returns Promise
- */
+    const user = new User(data);
+    await user.save();
 
-function createUser(user) {
-  return new Promise((reject, resolve) => {
-    User.findOne(user.email)
-      .then(data => {
-        console.log(data)
-        data ||
-        resolve(
-          User.create(user, (err, response) => {
-            if (err) reject({ error: err });
-            return response;
-          })
-        );
-        reject(createError(`${user.email} already exists`, 'USER_EXIST'));
-      })
-      .catch(error => {
-        reject({ error: error });
-      });
-  });
+    res
+      .status(200)
+      .json(formatoResponse('success', user, 'Usuario creado con éxito'));
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
 }
 
 /**
  * Desactiva un usuario del sistema
  */
-/* function enableUser(user) {
-  return new Promise((reject, resolve) => {
-    User.findOne({ email: user.email }).then(data => {
-      if (!data) {
-        const error
-        reject(('The user does NOT exist in the database.'));
-      }
-  })
+async function enableUser(req, res, next) {
+  try {
+    const usuario = await User.findOne({ email: req.body.email });
 
+    if (!usuario)
+      return next(createError(500, 'El usuario NO existe en la base de datos'));
 
     usuario.activo = true;
     await usuario.save();
 
     res
       .status(200)
-      .json(formatoResponse('success', user, 'User successfully activated.'));
-
+      .json(formatoResponse('success', user, 'Usuario activado con éxito'));
+  } catch (error) {
     return next(createError(500, error.message));
-
-} */
+  }
+}
 
 /**
  * Deshabilita un usuario del sistema
  */
-/* async function disableUser(req, res, next) {
+async function disableUser(req, res, next) {
   try {
     const usuario = await User.findOne({ email: req.body.email });
 
     if (!usuario)
-      return next(createError(500, 'The user does NOT exist in the database.'));
+      return next(createError(500, 'El usuario NO existe en la base de datos'));
 
     usuario.activo = false;
     await usuario.save();
 
     res
       .status(200)
-      .json(formatoResponse('success', user, 'User successfully disabled.'));
+      .json(
+        formatoResponse('success', user, 'Usuario deshabilitado con éxito')
+      );
   } catch (error) {
     return next(createError(500, error.message));
   }
-} */
+}
 
 module.exports = {
   createUser,
-/*   enableUser,
-  disableUser, */
+  enableUser,
+  disableUser,
 };
