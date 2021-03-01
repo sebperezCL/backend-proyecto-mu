@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
   {
-    uidFirebase: {
+    uid: {
       type: String,
       required: true,
       unique: true,
@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema(
       index: true,
       required: true,
     },
-    names: {
+    displayName: {
       type: String,
       required: [true, 'Name cannot be empty'],
     },
@@ -26,7 +26,7 @@ const userSchema = mongoose.Schema(
     secondSurname: {
       type: String,
     },
-    fiscalId: {
+    fiscalNumber: {
       type: String,
       unique: true,
       index: true,
@@ -34,10 +34,10 @@ const userSchema = mongoose.Schema(
     },
     active: {
       type: Boolean,
-      required: true,
+      //required: true,
       default: false,
     },
-    photo: String, // ruta a fotografía del usuario
+    photoURL: String, // ruta a fotografía del usuario
     role: {
       type: String,
       default: 'Member',

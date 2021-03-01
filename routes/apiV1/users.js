@@ -10,12 +10,12 @@ const userController = require('../../controllers/usersController');
 router.post(
   '/',
   [
-    body('uidFirebase', 'Indicate the user id').notEmpty(),
+    body('uid', 'Indicate the user id').notEmpty(),
     body('email', "Indicate the user's email address").notEmpty(),
-    body('names', 'Indicate the names of the user').notEmpty(),
+    body('displayName', 'Indicate the names of the user').notEmpty(),
     body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
     body('secondSurname').isString(),
-    body('fiscalId', "Indicate the user's fiscal id").notEmpty(),
+    body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
   ],
   fieldsValidator,
   userController.createUser
