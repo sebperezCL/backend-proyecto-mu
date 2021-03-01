@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
-  console.log(req.headers.authorization)
+  console.log(req.header())
   
   res.end(200).end()
 })

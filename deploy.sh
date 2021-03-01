@@ -8,6 +8,9 @@ deploy () {
   echo "Script de despliegue........." 
   echo "Este script añade todos los cambios commitea y pushea"
   echo "!!!!!!!!Estas seguro de los cambios !!!!!!!!!!"
+
+  git status
+  
   read -p " true|false " state
   
   if [[ $state = 'true' ]]
