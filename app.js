@@ -24,14 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(rolValidator)
-//app.use('/auth', auth);
-app.use('/apiV1/user', usersRouter);
-app.get('/apiV1/prueba', (req, res, next) => {
+app.use((req, res, next) => {
   console.log(req.headers.authorization)
   
   res.end(200).end()
 })
+//app.use('/auth', auth);
+app.use('/apiV1/user', usersRouter);
+
 //app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
