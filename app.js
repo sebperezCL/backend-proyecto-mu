@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   console.log(req)
   
-  res.end(200).end()
+  res.end(200)
 })
 //app.use('/auth', auth);
 app.use('/apiV1/user', usersRouter);
