@@ -40,10 +40,18 @@ echo "                                                                          
 
 
   echo "Script de despliegue........." 
-  echo "este script añade todos los cambios commitea y pushea"
-  git add .
-  git commit -m "Commit deploy script in dev"
-  ssh MU-NODE 'sudo -u node -i' <<< 'cd node-mu && git checkout \$1 && git pull && pm2 restart www'
+  echo "Este script añade todos los cambios commitea y pushea"
+  echo "!!!!!!!!Estas seguro de los cambios !!!!!!!!!!"
+  read -p " true|false " state
+  
+  if [[ $state = 'true' ]]
+  then
+    git add .
+    git commit -m "Commit deploy script in dev"
+    ssh MU-NODE 'sudo -u node -i' <<< 'cd node-mu && git checkout $1 && git pull && pm2 restart www'
+  else
+    exit 0
+  fi
 }
 
 deploy
