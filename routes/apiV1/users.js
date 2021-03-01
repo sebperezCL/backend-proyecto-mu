@@ -3,7 +3,6 @@ var router = express.Router();
 const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
-const rolValidator = require('../../lib/middlewares/rolValidator');
 const {createUser, enableUser, disableUser, getUser} = require('../../controllers/usersController');
 
 //! FALTA AGREGAR LOS MIDDLEWARES DE AUTENTICACION y ROLES
@@ -21,7 +20,6 @@ router.post(
     body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
   ],
   fieldsValidator,
-  rolValidator,
   createUser
 );
 
