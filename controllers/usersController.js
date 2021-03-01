@@ -3,8 +3,6 @@
 const User = require('../models/User');
 const createError = require('http-errors');
 const { matchedData } = require('express-validator');
-
-const { user } = require('../lib/connectMongoose');
 const formatoResponse = require('../lib/formatoResponse');
 
 /**
@@ -25,11 +23,11 @@ async function createUser(req, res, next) {
     await user.save();
 
     res
-      .status(200)
+      .status(201)
       .json(formatoResponse('success', user, 'Usuario creado con éxito'));
   } catch (error) {
     console.log(error, 'dentro del error')
-    //return next(createError(500, error.message));
+    return next(createError(500, error.message));
   }
 }
 
