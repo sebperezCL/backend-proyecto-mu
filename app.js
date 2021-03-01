@@ -28,7 +28,8 @@ app.use(rolValidator)
 //app.use('/auth', auth);
 app.use('/apiV1/user', usersRouter);
 app.get('/apiV1/prueba', (req, res, next) => {
-  console.log(req.headers)
+  console.log(req.headers.authorization)
+  
   res.end(200).end()
 })
 //app.use('/', indexRouter);
