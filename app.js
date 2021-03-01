@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(rolValidator)
 //app.use('/auth', auth);
 app.use('/apiV1/user', usersRouter);
-app.get('/prueba', (req, res, next) => {
+app.get('/apiV1/prueba', (req, res, next) => {
   console.log(req.headers)
   res.end(200).end()
 })
