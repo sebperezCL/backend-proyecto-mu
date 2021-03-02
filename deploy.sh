@@ -19,7 +19,8 @@ deploy () {
     git add .
     git commit -m "Commit deploy script in dev"
     git push
-    ssh MU-NODE 'sudo -u node -i' <<< 'cd node-mu && git checkout dev && git pull && git status && npm i && pm2 restart www && pm2 log'
+    ssh MU-NODE 'sudo -u node -i' <<< 'cd node-mu && git checkout dev && git pull && git status && npm i
+     && pm2 restart www && pm2 log'
   else
     exit 0
   fi
