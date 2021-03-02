@@ -3,9 +3,11 @@ var router = express.Router();
 const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
-const userController = require('../../controllers/usersController');
+const {createUser, enableUser, disableUser, getUser} = require('../../controllers/usersController');
 
 //! FALTA AGREGAR LOS MIDDLEWARES DE AUTENTICACION y ROLES
+
+router.get('/', getUser)
 
 router.post(
   '/',
@@ -18,19 +20,19 @@ router.post(
     body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
   ],
   fieldsValidator,
-  userController.createUser
+  createUser
 );
 
 router.put('/enable', [
   body('email', "Indicate the user's email address").notEmpty(),
   fieldsValidator,
-  userController.enableUser,
+  enableUser,
 ]);
 
 router.put('/disable', [
   body('email', "Indicate the user's email address").notEmpty(),
   fieldsValidator,
-  userController.disableUser,
+  disableUser,
 ]);
 
 module.exports = router;

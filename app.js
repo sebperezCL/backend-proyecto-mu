@@ -7,6 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const auth = require('./routes/apiV1/auth');
 const usersRouter = require('./routes/apiV1/users');
+const rolValidator = require('./lib/middlewares/rolValidator')
 
 const app = express();
 
@@ -23,9 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use((req, res, next) => {
+  console.log(req)
+  
+  res.end(200)
+})
 //app.use('/auth', auth);
 app.use('/apiV1/user', usersRouter);
+
 //app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

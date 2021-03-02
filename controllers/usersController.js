@@ -3,8 +3,6 @@
 const User = require('../models/User');
 const createError = require('http-errors');
 const { matchedData } = require('express-validator');
-
-const { user } = require('../lib/connectMongoose');
 const formatoResponse = require('../lib/formatoResponse');
 
 /**
@@ -25,11 +23,11 @@ async function createUser(req, res, next) {
     await user.save();
 
     res
-      .status(200)
+      .status(201)
       .json(formatoResponse('success', user, 'Usuario creado con éxito'));
   } catch (error) {
     console.log(error, 'dentro del error')
-    //return next(createError(500, error.message));
+    return next(createError(500, error.message));
   }
 }
 
@@ -77,8 +75,34 @@ async function disableUser(req, res, next) {
   }
 }
 
+
+/**
+ * Retorna un usuario
+ */
+async function getUser(req, res, next) {
+  try {
+    const usuario = await User.findOne({ email: req.body.uid });
+
+    if (!usuario)
+      return next(createError(404, 'El usuario NO existe en la base de datos'));
+
+    usuario.activo = true;
+    await usuario.save();
+
+    res
+      .status(200)
+      .json(formatoResponse('success', user, 'Usuario activado con éxito'));
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+}
+
+
+
+
 module.exports = {
   createUser,
   enableUser,
   disableUser,
+  getUser
 };
