@@ -8,31 +8,21 @@ const indexRouter = require('./routes/index');
 const auth = require('./routes/apiV1/auth');
 const usersRouter = require('./routes/apiV1/users');
 const rolValidator = require('./lib/middlewares/rolValidator')
+const tokenDecode = require('./lib/middlewares/tokenDecode')
 
 const app = express();
 
 require('./lib/connectMongoose');
 
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-
-// EJS Para qué??--------------------------------------------------------------------------------------<
-//app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use((req, res, next) => {
-  console.log(req)
-  
-  res.end(200)
-})
-//app.use('/auth', auth);
+app.use(tokenDecode)
 app.use('/apiV1/user', usersRouter);
 
-//app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -52,7 +42,7 @@ app.use(function (err, req, res, next) {
   /**
    * Respuesta estándar de errores
    */
-  if (req.originalUrl.startsWith('/api/')) {
+  if (req.originalUrl.startsWith('/apiV1/')) {
     // Error que viene de la API
     res.json({
       status: 'error',

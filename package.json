@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "cross-env DEBUG=mu-back:* PORT=5000 NODE_ENV=development nodemon ./bin/www -e ejs,js,mjs,json",
     "start": "node ./bin/www",
-    "deploy" : "bash deploy.sh"
+    "deploy": "bash deploy.sh"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.0",
