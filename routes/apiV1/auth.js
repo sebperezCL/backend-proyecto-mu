@@ -1,67 +1,56 @@
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
+const { body } = require('express-validator');
+
+const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const admin = require('../../firebaseAuth/adminFirebase');
+const {
+  registerAndCreateUser,
+  listFirebaseUsers,
+  deleteFirebaseUser,
+  login,
+} = require('../../controllers/authController');
 const formatoResponse = require('../../lib/formatoResponse');
-const { createUser } = require('../../controllers/usersController');
 
-router.post('/registro', function (req, res, next) {
-  const {
-    email,
-    password,
-    name,
-    surname,
-    organization,
-    fiscalNumber,
-  } = req.body;
+router.post(
+  '/register',
+  [
+    body('email', "Indicate the user's email address").notEmpty(),
+    body('password', "Indicate the user's password").notEmpty(),
+    body('names', 'Indicate the names of the user').notEmpty(),
+    body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
+    body('secondSurname').isString(),
+    body('organization', 'Indicate the user organization').notEmpty(),
+    body('fiscalId', "Indicate the user's fiscal id").notEmpty(),
+  ],
+  fieldsValidator,
+  registerAndCreateUser
+);
 
-  admin
-    .auth()
-    .createUser({
-      email: email,
-      emailVerified: false,
-      password: password,
-      surname: surname,
-      organization: organization,
-      fiscalNumber: fiscalNumber,
-      displayName: `${name} ${surname} `,
-    })
-    .then(data => {
-      console.log(data);
-      console.log('Successfully updated user', data.toJSON());
-      res
-        .status(201)
-        .json(
-          formatoResponse(
-            'succes',
-            data.toJSON(),
-            'User successfully activated'
-          )
-        )
-        .end();
-    })
-    .catch(err => {
-      console.log(err);
-      return createError(500, err.message);
-    });
+/**
+ *! Sólo para pruebas
+ */
+router.get('/list', listFirebaseUsers);
 
-  //createUser()
-});
+/**
+ *! Sólo para pruebas
+ */
+router.delete(
+  '/',
+  [body('uid', 'Indicate firebase uid to delete')],
+  fieldsValidator,
+  deleteFirebaseUser
+);
 
-router.post('/login', function (req, res, next) {
-  const { email, password } = req.body;
-
-  admin
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(user => {
-      console.log(user);
-      res.end();
-    })
-    .catch(error => {
-      console.log(error);
-      return createError(500, error.message);
-    });
-});
+router.post(
+  '/login',
+  [
+    body('email', "Indicate the user's email address").notEmpty(),
+    body('password', "Indicate the user's password").notEmpty(),
+  ],
+  fieldsValidator,
+  login
+);
 
 module.exports = router;
