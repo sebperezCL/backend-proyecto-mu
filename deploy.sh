@@ -11,9 +11,9 @@ deploy () {
 
   git status
   
-  read -p " true|false " state
+  read -p " true | false " state
   
-  if [[ $state = 'true' ]]
+  if [[ $state = 'true' || 'ok' ]]
   then
     echo "Clona repo en servidor"
     git add .
