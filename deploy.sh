@@ -23,6 +23,7 @@ deploy () {
     && git checkout dev \
     && git pull \
     && git status \
+    && if [ git diff "./package.json" ]; then echo "si"; fi \
     && npm i \
     && pm2 restart www \
     && pm2 log'
