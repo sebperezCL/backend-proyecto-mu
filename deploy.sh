@@ -23,7 +23,6 @@ deploy () {
     && git checkout dev \
     && git pull \
     && git status \
-    && npm i \
     && pm2 restart www \
     && pm2 log'
   else
