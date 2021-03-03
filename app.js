@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(tokenDecode)
-app.use('/apiV1/user', tokenDecode, rolValidator, usersRouter);
+app.use('/apiV1/user', tokenDecode(['Member']), rolValidator, usersRouter);
 
 
 // catch 404 and forward to error handler
