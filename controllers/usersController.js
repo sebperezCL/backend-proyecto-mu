@@ -84,7 +84,9 @@ async function getUser(req, res, next) {
     const usuario = await User.findOne({ email: req.userData.email });
 
     if (!usuario) {
-      return next(createError(404, 'El usuario NO existe en la base de datos'));
+     return res
+      .status(404)
+      .json(formatoResponse('not found', '', 'Usuario activado con éxito', 'NOUSERDATABASE'));
     }
     
     res
