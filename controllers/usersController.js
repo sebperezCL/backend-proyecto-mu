@@ -80,6 +80,7 @@ async function disableUser(req, res, next) {
  * Retorna un usuario
  */
 async function getUser(req, res, next) {
+  console.log(req.userData.email, '<-- userdata')
   try {
     const usuario = await User.findOne({ email: req.userData.email });
 
