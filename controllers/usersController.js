@@ -81,7 +81,7 @@ async function disableUser(req, res, next) {
  */
 async function getUser(req, res, next) {
   try {
-    const usuario = await User.findOne({ email: req.body.uid });
+    const usuario = await User.findOne({ email: req.userData.email });
 
     if (!usuario) {
       return next(createError(404, 'El usuario NO existe en la base de datos'));
