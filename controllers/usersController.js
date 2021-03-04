@@ -93,6 +93,8 @@ async function getUser(req, res, next) {
       .status(200)
       .json(formatoResponse('success', user, 'Usuario activado con éxito'));
   } catch (error) {
+    console.log({error}, '<-----------')
+    
     return next(createError(500, error.message));
   }
 }
