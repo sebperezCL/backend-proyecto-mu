@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const auth = require('./routes/apiV1/auth');
 const usersRouter = require('./routes/apiV1/users');
 const rolValidator = require('./lib/middlewares/rolValidator')
 const tokenDecode = require('./lib/middlewares/tokenDecode')
