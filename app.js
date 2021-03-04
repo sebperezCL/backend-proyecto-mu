@@ -22,6 +22,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(tokenDecode)
 app.use('/apiV1/user', tokenDecode, rolValidator(['Member']), usersRouter);
+app.use('apiVi/org', rolValidator(['SuperAdmin']), (req, res, next) => {
+  res.status(501)
+})
 
 
 // catch 404 and forward to error handler

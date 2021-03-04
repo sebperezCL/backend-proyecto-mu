@@ -35,4 +35,22 @@ router.put('/disable', [
   disableUser,
 ]);
 
+
+/**
+ *! Sólo para pruebas
+ */
+ // router.get('/list', listFirebaseUsers);
+
+ /**
+  *! Sólo para pruebas
+  */
+ // recoger url params uid user
+ // solo borrar si en mongo no hay usuario
+ //router.delete(
+ //  '/',
+ //  [body('uid', 'Indicate firebase uid to delete')],
+ //  fieldsValidator,
+ //  deleteFirebaseUser
+ //);
+
 module.exports = router;

@@ -83,12 +83,10 @@ async function getUser(req, res, next) {
   try {
     const usuario = await User.findOne({ email: req.body.uid });
 
-    if (!usuario)
+    if (!usuario) {
       return next(createError(404, 'El usuario NO existe en la base de datos'));
-
-    usuario.activo = true;
-    await usuario.save();
-
+    }
+    
     res
       .status(200)
       .json(formatoResponse('success', user, 'Usuario activado con éxito'));
@@ -106,3 +104,37 @@ module.exports = {
   disableUser,
   getUser
 };
+
+
+/**
+ *! Sólo para pruebas
+ */
+/*  function listFirebaseUsers(req, res, next) {
+  admin
+    .auth()
+    .listUsers()
+    .then(users => {
+      res
+        .status(201)
+        .json(formatoResponse('succes', users, 'Users List'))
+        .end();
+    });
+} */
+
+/**
+ *! Sólo para pruebas
+ */
+/* function deleteFirebaseUser(req, res, next) {
+  const { uid } = req.body;
+  admin
+    .auth()
+    .deleteUser(uid)
+    .then(() => {
+      res
+        .status(201)
+        .json(formatoResponse('succes', users, 'Users List'))
+        .end();
+    })
+    .catch(err => next(createError(500, err.message)));
+}
+ */
