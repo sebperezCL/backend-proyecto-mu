@@ -26,7 +26,7 @@ async function createUser(req, res, next) {
       .status(201)
       .json(formatoResponse('success', user, 'Usuario creado con éxito'));
   } catch (error) {
-    console.log(error, 'dentro del error')
+    console.log(error, 'dentro del error');
     return next(createError(500, error.message));
   }
 }
@@ -75,41 +75,41 @@ async function disableUser(req, res, next) {
   }
 }
 
-
 /**
  * Retorna un usuario
  */
 async function getUser(req, res, next) {
-  console.log(req.userData.email, '<-- userdata')
+  console.log(req.userData.email, '<-- userdata');
   try {
-    const usuario = await User.findOne({ email: req.userData.email });
+    const user = await User.findOne({ email: req.userData.email });
 
-    if (!usuario) {
-     return res
-      .status(404)
-      .json(formatoResponse('not found', '', 'Usuario activado con éxito', 'NOUSERDATABASE'));
+    if (!user) {
+      return res
+        .status(404)
+        .json(
+          formatoResponse(
+            'not found',
+            '',
+            'Usuario activado con éxito',
+            'NOUSERDATABASE'
+          )
+        );
     }
-    
+
     res
       .status(200)
       .json(formatoResponse('success', user, 'Usuario activado con éxito'));
   } catch (error) {
-    console.log({error}, '<-----------')
-    
     return next(createError(500, error.message));
   }
 }
-
-
-
 
 module.exports = {
   createUser,
   enableUser,
   disableUser,
-  getUser
+  getUser,
 };
-
 
 /**
  *! Sólo para pruebas
