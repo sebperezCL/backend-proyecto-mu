@@ -4,6 +4,7 @@ const User = require('../models/User');
 const createError = require('http-errors');
 const { matchedData } = require('express-validator');
 const formatoResponse = require('../lib/formatoResponse');
+const admin = require('../firebaseAuth/adminFirebase');
 
 /**
  * Crea un nuevo usuario en la db, los datos del usuario
@@ -104,17 +105,10 @@ async function getUser(req, res, next) {
   }
 }
 
-module.exports = {
-  createUser,
-  enableUser,
-  disableUser,
-  getUser,
-};
-
 /**
  *! Sólo para pruebas
  */
-/*  function listFirebaseUsers(req, res, next) {
+function listFirebaseUsers(req, res, next) {
   admin
     .auth()
     .listUsers()
@@ -124,22 +118,27 @@ module.exports = {
         .json(formatoResponse('succes', users, 'Users List'))
         .end();
     });
-} */
+}
 
 /**
  *! Sólo para pruebas
  */
-/* function deleteFirebaseUser(req, res, next) {
+function deleteFirebaseUser(req, res, next) {
   const { uid } = req.body;
   admin
     .auth()
     .deleteUser(uid)
     .then(() => {
-      res
-        .status(201)
-        .json(formatoResponse('succes', users, 'Users List'))
-        .end();
+      res.status(201).json(formatoResponse('succes', uid, 'Users List')).end();
     })
     .catch(err => next(createError(500, err.message)));
 }
- */
+
+module.exports = {
+  createUser,
+  enableUser,
+  disableUser,
+  getUser,
+  listFirebaseUsers,
+  deleteFirebaseUser,
+};

@@ -3,11 +3,18 @@ var router = express.Router();
 const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
-const {createUser, enableUser, disableUser, getUser} = require('../../controllers/usersController');
+const {
+  createUser,
+  enableUser,
+  disableUser,
+  getUser,
+  listFirebaseUsers,
+  deleteFirebaseUser,
+} = require('../../controllers/usersController');
 
 //! FALTA AGREGAR LOS MIDDLEWARES DE AUTENTICACION y ROLES
 
-router.get('/', getUser)
+router.get('/', getUser);
 
 router.post(
   '/',
@@ -35,22 +42,21 @@ router.put('/disable', [
   disableUser,
 ]);
 
+/**
+ *! Sólo para pruebas
+ */
+router.get('/list', listFirebaseUsers);
 
 /**
  *! Sólo para pruebas
  */
- // router.get('/list', listFirebaseUsers);
-
- /**
-  *! Sólo para pruebas
-  */
- // recoger url params uid user
- // solo borrar si en mongo no hay usuario
- //router.delete(
- //  '/',
- //  [body('uid', 'Indicate firebase uid to delete')],
- //  fieldsValidator,
- //  deleteFirebaseUser
- //);
+// recoger url params uid user
+// solo borrar si en mongo no hay usuario
+router.delete(
+  '/',
+  [body('uid', 'Indicate firebase uid to delete')],
+  fieldsValidator,
+  deleteFirebaseUser
+);
 
 module.exports = router;

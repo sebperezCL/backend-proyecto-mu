@@ -6,13 +6,12 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/apiV1/users');
-const rolValidator = require('./lib/middlewares/rolValidator')
-const tokenDecode = require('./lib/middlewares/tokenDecode')
+const rolValidator = require('./lib/middlewares/rolValidator');
+const tokenDecode = require('./lib/middlewares/tokenDecode');
 
 const app = express();
 
 require('./lib/connectMongoose');
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -22,9 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use(tokenDecode)
 app.use('/apiV1/user', tokenDecode, rolValidator(['Member']), usersRouter);
 app.use('apiVi/org', rolValidator(['SuperAdmin']), (req, res, next) => {
-  res.status(501)
-})
-
+  res.status(501);
+});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
