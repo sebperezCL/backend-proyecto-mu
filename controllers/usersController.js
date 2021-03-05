@@ -86,12 +86,12 @@ async function getUser(req, res, next) {
 
     if (!user) {
       return res
-        .status(404)
+        .status(200) //! Deberia devolver 200, no 404
         .json(
           formatoResponse(
-            'not found',
+            'user not found',
             '',
-            'Usuario activado con éxito',
+            'User not created',
             'NOUSERDATABASE'
           )
         );
