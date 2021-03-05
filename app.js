@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 //app.use(tokenDecode)
-app.use('/apiV1/user', tokenDecode, rolValidator(['Member']), usersRouter);
+app.use('/apiV1/user', tokenDecode, usersRouter);
 app.use('apiVi/org', rolValidator(['SuperAdmin']), (req, res, next) => {
   res.status(501);
 });
