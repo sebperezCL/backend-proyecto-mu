@@ -13,7 +13,14 @@ const admin = require('../firebaseAuth/adminFirebase');
 async function createOrUpdateUser(req, res, next) {
   try {
     const data = matchedData(req);
+
     const { email, address, mobile, phone } = data;
+
+    //? Sólo el SuperAdmin puede crear o actualizar otros usuarios
+    if (req.userData.email !== email && req.userData.role !== 'SuperAdmin') {
+      return next(createError(401, 'Forbidden'));
+    }
+
     let usuario = await User.findOne({ email: email });
 
     if (!usuario) {
@@ -88,7 +95,7 @@ async function disableUser(req, res, next) {
  * Retorna un usuario
  */
 async function getUser(req, res, next) {
-  console.log(req.userData.email, '<-- userdata');
+  console.log(req.userData, '<-- userdata');
   try {
     const user = await User.findOne({ email: req.userData.email });
 
