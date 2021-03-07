@@ -10,22 +10,30 @@ const admin = require('../firebaseAuth/adminFirebase');
  * Crea un nuevo usuario en la db, los datos del usuario
  * vienen en el body
  */
-async function createUser(req, res, next) {
+async function createOrUpdateUser(req, res, next) {
   try {
     const data = matchedData(req);
-    console.log(data);
+    const { email, address, mobile, phone } = data;
+    let usuario = await User.findOne({ email: email });
 
-    const usuario = await User.findOne({ email: data.email });
+    if (!usuario) {
+      usuario = new User(data);
+    } else {
+      usuario.displayName = data.displayName;
+      usuario.firstSurname = data.firstSurname;
+      usuario.secondSurname = data.secondSurname;
+      usuario.fiscalNumber = data.fiscalNumber;
+      usuario.photoURL = data.photoURL;
+    }
 
-    if (usuario)
-      return next(createError(500, 'El usuario ya existe en la base de datos'));
-
-    const user = new User(data);
-    await user.save();
+    if (address) usuario.contact.address = address;
+    if (mobile) usuario.contact.mobile = mobile;
+    if (phone) usuario.contact.homePhone = phone;
+    await usuario.save();
 
     res
       .status(201)
-      .json(formatoResponse('success', user, 'Usuario creado con éxito'));
+      .json(formatoResponse('success', usuario, 'Usuario creado con éxito'));
   } catch (error) {
     console.log(error, 'dentro del error');
     return next(createError(500, error.message));
@@ -135,7 +143,7 @@ function deleteFirebaseUser(req, res, next) {
 }
 
 module.exports = {
-  createUser,
+  createOrUpdateUser,
   enableUser,
   disableUser,
   getUser,

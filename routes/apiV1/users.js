@@ -4,7 +4,7 @@ const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const {
-  createUser,
+  createOrUpdateUser,
   enableUser,
   disableUser,
   getUser,
@@ -25,9 +25,13 @@ router.post(
     body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
     body('secondSurname').isString(),
     body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
+    body('address').isString(),
+    body('mobile').isString(),
+    body('phone').isString(),
+    body('photoURL'),
   ],
   fieldsValidator,
-  createUser
+  createOrUpdateUser
 );
 
 router.put('/enable', [

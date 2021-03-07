@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema(
     active: {
       type: Boolean,
       //required: true,
-      default: false,
+      default: true,
     },
     photoURL: String, // ruta a fotografía del usuario
     role: {
@@ -48,8 +48,8 @@ const userSchema = mongoose.Schema(
     },
     contact: {
       address: String,
+      mobile: String,
       homePhone: String,
-      officePhone: String,
     },
     organizations: [
       {
