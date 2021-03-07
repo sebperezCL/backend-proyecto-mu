@@ -54,7 +54,7 @@ const userSchema = mongoose.Schema(
     organizations: [
       {
         name: String,
-        orgId: String,
+        orgId: mongoose.Schema.Types.ObjectId,
         fiscalYear: [
           {
             year: Number,

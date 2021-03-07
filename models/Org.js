@@ -3,13 +3,13 @@
 const mongoose = require('mongoose');
 
 const orgSchema = mongoose.Schema({
-  orgId: {
-    // Puede corresponder al identificador fiscal
-    type: String,
-    index: true,
-    unique: true,
-    required: true,
-  },
+  // orgId: {
+  //   // Puede corresponder al identificador fiscal
+  //   type: String,
+  //   index: true,
+  //   unique: true,
+  //   required: true,
+  // },
   name: {
     type: String,
     index: true,
