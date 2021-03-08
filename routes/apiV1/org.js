@@ -4,14 +4,14 @@ const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const rolValidator = require('../../lib/middlewares/rolValidator');
-const { createOrUpdateOrg } = require('../../controllers/orgController');
+const orgController = require('../../controllers/orgController');
 
 router.post(
   '/',
   [
-    body('orgid', 'Indicate the id').notEmpty(),
-    body('displayName', 'Indicate the name of the organization').notEmpty(),
-    body('foundation', 'Indicate the foundation date').notEmpty(),
+    body('orgid', 'Indicate the id'),
+    body('name', 'Indicate the name of the organization').notEmpty(),
+    body('foundationDate', 'Indicate the foundation date').notEmpty(),
     body('country', 'Indicate the country').notEmpty(),
     body('city', 'Indicate the city').notEmpty(),
     body('address', 'Indicate the address').notEmpty(),
@@ -21,7 +21,9 @@ router.post(
   ],
   fieldsValidator,
   rolValidator(['SuperAdmin']),
-  createOrUpdateOrg
+  orgController.createOrUpdateOrg
 );
+
+router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
 module.exports = router;

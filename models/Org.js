@@ -15,7 +15,7 @@ const orgSchema = mongoose.Schema({
     index: true,
     required: true,
   },
-  foundationDate: Date,
+  foundationDate: String,
   president: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -32,6 +32,7 @@ const orgSchema = mongoose.Schema({
   city: String,
   province: String,
   country: String,
+  photoURL: String,
   fiscalYear: [
     {
       year: Number,

@@ -4,14 +4,7 @@ const { body } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const rolValidator = require('../../lib/middlewares/rolValidator');
-const {
-  createOrUpdateUser,
-  enableUser,
-  disableUser,
-  getUser,
-  listFirebaseUsers,
-  deleteFirebaseUser,
-} = require('../../controllers/usersController');
+const usersController = require('../../controllers/usersController');
 
 router.get(
   '/',
@@ -23,8 +16,10 @@ router.get(
     'Member',
     'NotRegistered',
   ]),
-  getUser
+  usersController.getUser
 );
+
+router.get('/all', rolValidator(['SuperAdmin']), usersController.getAllUsers);
 
 router.post(
   '/',
@@ -49,19 +44,19 @@ router.post(
     'Member',
     'NotRegistered',
   ]),
-  createOrUpdateUser
+  usersController.createOrUpdateUser
 );
 
 router.put('/enable', [
   body('email', "Indicate the user's email address").notEmpty(),
   fieldsValidator,
-  enableUser,
+  usersController.enableUser,
 ]);
 
 router.put('/disable', [
   body('email', "Indicate the user's email address").notEmpty(),
   fieldsValidator,
-  disableUser,
+  usersController.disableUser,
 ]);
 
 /**

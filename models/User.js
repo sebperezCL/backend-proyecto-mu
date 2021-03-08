@@ -54,7 +54,6 @@ const userSchema = mongoose.Schema(
     organizations: [
       {
         name: String,
-        orgId: mongoose.Schema.Types.ObjectId,
         fiscalYear: [
           {
             year: Number,
@@ -81,8 +80,14 @@ const userSchema = mongoose.Schema(
   },
   {
     autoIndex: process.env.NODE_ENV !== 'production', // no crear los índices automáticamente en producción
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
   }
 );
+
+userSchema.virtual('fullName').get(function () {
+  return `${this.displayName} ${this.firstSurname} ${this.secondSurname}`;
+});
 
 const User = mongoose.model('User', userSchema);
 

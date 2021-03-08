@@ -95,7 +95,7 @@ async function disableUser(req, res, next) {
  * Retorna un usuario
  */
 async function getUser(req, res, next) {
-  console.log(req.userData, '<-- userdata');
+  //console.log(req.userData, '<-- userdata');
   try {
     const user = await User.findOne({ email: req.userData.email });
 
@@ -115,6 +115,19 @@ async function getUser(req, res, next) {
     res
       .status(200)
       .json(formatoResponse('success', user, 'Usuario activado con éxito'));
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+}
+
+async function getAllUsers(req, res, next) {
+  try {
+    const users = await User.find().select(
+      'displayName firstSurname secondSurname'
+    );
+    res
+      .status(200)
+      .json(formatoResponse('success', users, 'Usuario activado con éxito'));
   } catch (error) {
     return next(createError(500, error.message));
   }
@@ -154,6 +167,7 @@ module.exports = {
   enableUser,
   disableUser,
   getUser,
+  getAllUsers,
   listFirebaseUsers,
   deleteFirebaseUser,
 };
