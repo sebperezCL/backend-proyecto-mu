@@ -74,3 +74,8 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
+/* function x (loquesea) {
+  return dispatch(loquesea)
+}
+*/
