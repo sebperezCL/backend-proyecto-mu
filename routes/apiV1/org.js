@@ -24,6 +24,8 @@ router.post(
   orgController.createOrUpdateOrg
 );
 
-router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
+router.get('/all',rolValidator(['SuperAdmin']), orgController.getAllOrgs);
+
+router.get('/:_id', orgController.getOrgsById)
 
 module.exports = router;

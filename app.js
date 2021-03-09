@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 
 //app.use(tokenDecode)
 app.use('/apiV1/user', tokenDecode, usersRouter);
-app.use('/apiV1/org', tokenDecode, rolValidator(['SuperAdmin']), orgRouter);
+app.use('/apiV1/org', /* tokenDecode, */ /* rolValidator(['SuperAdmin']) ,*/ orgRouter); // TODO quitar cometarios solo para uso domestico
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

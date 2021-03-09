@@ -52,4 +52,16 @@ async function getAllOrgs(req, res, next) {
   }
 }
 
-module.exports = { createOrUpdateOrg, getAllOrgs };
+
+async function getOrgsById(req, res, next) {
+  try {
+    const orgs = await Org.findById(req.params._id);
+    res
+      .status(200)
+      .json(formatoResponse('success', orgs, 'Usuario activado con éxito'));
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+}
+
+module.exports = { createOrUpdateOrg, getAllOrgs, getOrgsById };

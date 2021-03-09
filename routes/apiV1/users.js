@@ -6,6 +6,13 @@ const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const rolValidator = require('../../lib/middlewares/rolValidator');
 const usersController = require('../../controllers/usersController');
 
+
+/**
+ * @description
+ * GET / middleware rolvalitor con roles admitidos  
+ * Obtiene un Usuario filtrando por el email  
+ * Email incluido en req    
+ */
 router.get(
   '/',
   rolValidator([
