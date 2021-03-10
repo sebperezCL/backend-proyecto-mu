@@ -16,8 +16,7 @@ deploy () {
   if [[ $state = 'true' || 'ok' ]]
   then
     echo "Clona repo en servidor"
-    git add .
-    git commit -m "Commit deploy script in dev"
+    git commit -ma "Commit deploy script in dev"
     git push
     ssh MU-NODE 'sudo -u node -i' <<< 'cd node-mu \
     && git checkout dev \
