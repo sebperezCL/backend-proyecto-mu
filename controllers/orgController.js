@@ -68,7 +68,7 @@ async function deleteOrgsById(req, res, next) {
   try {
     await Org.deleteOne({_id: req.params._id});
     res
-      .status(204)
+      .status(204).end()
   } catch (error) {
     return next(createError(500, error.message));
   }
