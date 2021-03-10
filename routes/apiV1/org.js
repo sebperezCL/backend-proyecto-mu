@@ -28,4 +28,6 @@ router.get('/all',rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
 router.get('/:_id', orgController.getOrgsById)
 
+router.delete('/:_id', rolValidator(['SuperAdmin']), orgController.deleteOrgsById)
+
 module.exports = router;

@@ -64,4 +64,17 @@ async function getOrgsById(req, res, next) {
   }
 }
 
-module.exports = { createOrUpdateOrg, getAllOrgs, getOrgsById };
+async function deleteOrgsById(req, res, next) {
+  try {
+    await Org.deleteOne({_id: req.params._id});
+    res
+      .status(204)
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+}
+
+
+
+
+module.exports = { createOrUpdateOrg, getAllOrgs, getOrgsById, deleteOrgsById };
