@@ -12,11 +12,12 @@ const admin = require('../firebaseAuth/adminFirebase');
  */
 async function createOrUpdateUser(req, res, next) {
   try {
+    // Comprobacion del body de User.
     const data = matchedData(req);
 
     const { email, address, mobile, phone } = data;
 
-    //? Sólo el SuperAdmin puede crear o actualizar otros usuarios
+    //? Sólo el SuperAdmin puede crear o actualizar otros email de los usuarios
     if (req.userData.email !== email && req.userData.role !== 'SuperAdmin') {
       return next(createError(401, 'Forbidden'));
     }

@@ -13,6 +13,7 @@ const formatoResponse = require('../lib/formatoResponse');
 // get org
 
 async function createOrUpdateOrg(req, res, next) {
+  // comprobacion de coincidencia del body de org
   const data = matchedData(req);
   try {
     if (!data.orgid) {
@@ -51,7 +52,6 @@ async function getAllOrgs(req, res, next) {
     return next(createError(500, error.message));
   }
 }
-
 
 async function getOrgsById(req, res, next) {
   try {
