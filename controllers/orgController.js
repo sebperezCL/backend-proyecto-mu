@@ -15,10 +15,8 @@ async function createOrUpdateOrg(req, res, next) {
   // comprobacion de coincidencia del body de org
   const data = matchedData(req);
 
-  console.log(data, '<-- data back');
-
   try {
-    if (!data.orgid) {
+    if (!data.orgId) {
       // Se crea una nueva organización
       const user = await User.findById(data.president);
       if (!user) return next(createError(400, 'President does not exist'));
@@ -37,16 +35,25 @@ async function createOrUpdateOrg(req, res, next) {
         );
     } else {
       // Se modifica organización existente
-      // Comprobar si el orgid existe en la db
+      // Comprobar si el orgId existe en la db
       // Si no existe devolver un 400 o algo así
       // Si existe entonces actualizar con información que viene en objeto data
       // guardar con org.save y retornar el nuevo objeto
-      // return res
-      //   .status(200)
-      //   .json(
-      //     formatoResponse('success', org, 'Organization created successfully')
-      //   );
-      console.log(data, '<-- ver Data');
+      const org = await Org.findById(data.orgId);
+      if (!org) {
+        return next(
+          createError(400, 'ID does not correspond to any organisation in DB.')
+        );
+      }
+      console.log(org, '<-- org del Front');
+
+      // TODO Actualizar Org...
+
+      return res
+        .status(200)
+        .json(
+          formatoResponse('success', org, 'Organization updated successfully')
+        );
     }
   } catch (error) {
     console.log(error);

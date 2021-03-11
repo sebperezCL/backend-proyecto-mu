@@ -9,7 +9,7 @@ const orgController = require('../../controllers/orgController');
 router.post(
   '/',
   [
-    body('orgid', 'Indicate the id'),
+    body('orgId', 'Indicate the id'),
     body('name', 'Indicate the name of the organization').notEmpty(),
     body('foundationDate', 'Indicate the foundation date').notEmpty(),
     body('country', 'Indicate the country').notEmpty(),
@@ -24,10 +24,14 @@ router.post(
   orgController.createOrUpdateOrg
 );
 
-router.get('/all',rolValidator(['SuperAdmin']), orgController.getAllOrgs);
+router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
-router.get('/:_id', orgController.getOrgsById)
+router.get('/:_id', orgController.getOrgsById);
 
-router.delete('/:_id', rolValidator(['SuperAdmin']), orgController.deleteOrgsById)
+router.delete(
+  '/:_id',
+  rolValidator(['SuperAdmin']),
+  orgController.deleteOrgsById
+);
 
 module.exports = router;
