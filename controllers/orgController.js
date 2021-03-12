@@ -49,6 +49,19 @@ async function createOrUpdateOrg(req, res, next) {
 
       // TODO Actualizar Org...
 
+      org.address = data.address;
+      org.city = data.city;
+      org.country = data.country;
+      org.fiscalYear = data.fiscalYear;
+      org.foundationDate = data.foundationDate;
+      org.name = data.name;
+      org.orgId = data.orgId;
+      org.photoURL = data.photoURL;
+      org.president = data.president;
+      org.province = data.province;
+
+      await org.save();
+
       return res
         .status(200)
         .json(
