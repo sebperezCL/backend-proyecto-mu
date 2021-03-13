@@ -32,14 +32,14 @@ router.get('/all', rolValidator(['SuperAdmin']), usersController.getAllUsers);
 router.post(
   '/',
   [
-    body('uid', 'Indicate the user id').notEmpty(),
+    body('uid', 'Indicate the user id'),
     body('email', "Indicate the user's email address").notEmpty(),
     body('displayName', 'Indicate the names of the user').notEmpty(),
     body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
-    body('secondSurname').isString(),
+    body('secondSurname'),
     body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
-    body('address').isString(),
-    body('mobile').isString(),
+    body('address'),
+    body('mobile'),
     body('phone'),
     body('photoURL'),
   ],
