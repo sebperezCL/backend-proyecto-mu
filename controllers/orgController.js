@@ -14,7 +14,6 @@ const formatoResponse = require('../lib/formatoResponse');
 async function createOrUpdateOrg(req, res, next) {
   // comprobacion de coincidencia del body de org
   const data = matchedData(req);
-
   try {
     if (!data.orgId) {
       // Se crea una nueva organización
@@ -34,33 +33,26 @@ async function createOrUpdateOrg(req, res, next) {
           formatoResponse('success', org, 'Organization created successfully')
         );
     } else {
-      // Se modifica organización existente
-      // Comprobar si el orgId existe en la db
-      // Si no existe devolver un 400 o algo así
-      // Si existe entonces actualizar con información que viene en objeto data
-      // guardar con org.save y retornar el nuevo objeto
-      const org = await Org.findById(data.orgId);
-      if (!org) {
-        return next(
-          createError(400, 'ID does not correspond to any organisation in DB.')
-        );
+      console.log(data);
+
+      // Verifica si el presidente existe como usuario
+      const user = await User.findById(data.president);
+      if (!user) return next(createError(400, 'President does not exist'));
+
+      // Actualiza la organización con los nuevos datos recibidos
+      const org = await Org.findByIdAndUpdate(data.orgId, data, { new: false });
+
+      // Buscar si el usuario tiene asignada la organización en la que
+      // quedará como presidente
+      const orgInUser = user.organizations.filter(
+        org => org._id === data.orgId
+      );
+
+      // Si no la tiene asignada se la asigna
+      if (orgInUser.length === 0) {
+        user.organizations.push({ name: data.name, _id: org._id });
+        await user.save();
       }
-      console.log(org, '<-- org del Front');
-
-      // TODO Actualizar Org...
-
-      org.address = data.address;
-      org.city = data.city;
-      org.country = data.country;
-      org.fiscalYear = data.fiscalYear;
-      org.foundationDate = data.foundationDate;
-      org.name = data.name;
-      org.orgId = data.orgId;
-      org.photoURL = data.photoURL;
-      org.president = data.president;
-      org.province = data.province;
-
-      await org.save();
 
       return res
         .status(200)
@@ -71,15 +63,13 @@ async function createOrUpdateOrg(req, res, next) {
   } catch (error) {
     console.log(error);
   }
-  return next(createError(500, 'Error creating the organization'));
+  return next(createError(500, 'Error creating or updating the organization'));
 }
 
 async function getAllOrgs(req, res, next) {
   try {
     const orgs = await Org.find();
-    res
-      .status(200)
-      .json(formatoResponse('success', orgs, 'Usuario activado con éxito'));
+    res.status(200).json(formatoResponse('success', orgs, 'Exito'));
   } catch (error) {
     return next(createError(500, error.message));
   }
@@ -88,9 +78,7 @@ async function getAllOrgs(req, res, next) {
 async function getOrgsById(req, res, next) {
   try {
     const orgs = await Org.findById(req.params._id);
-    res
-      .status(200)
-      .json(formatoResponse('success', orgs, 'Usuario activado con éxito'));
+    res.status(200).json(formatoResponse('success', orgs, 'Exito'));
   } catch (error) {
     return next(createError(500, error.message));
   }
