@@ -98,7 +98,17 @@ async function disableUser(req, res, next) {
 async function getUser(req, res, next) {
   //console.log(req.userData, '<-- userdata');
   try {
-    const user = await User.findOne({ email: req.userData.email });
+    // Agrego esto para filtrar que sólo un usuario SuperAdmin puede consultar por otro usuario
+    // indicando el id de mongo en el query string
+    const data = matchedData(req);
+    let user;
+    if (data.userId) {
+      if (req.userData.role === 'SuperAdmin') {
+        user = await User.findById(data.userId);
+      }
+    } else {
+      user = await User.findOne({ email: req.userData.email });
+    }
 
     if (!user) {
       return res

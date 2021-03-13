@@ -1,20 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const rolValidator = require('../../lib/middlewares/rolValidator');
 const usersController = require('../../controllers/usersController');
 
-
 /**
  * @description
- * GET / middleware rolvalitor con roles admitidos  
- * Obtiene un Usuario filtrando por el email  
- * Email incluido en req    
+ * GET / middleware rolvalitor con roles admitidos
+ * Obtiene un Usuario filtrando por el email
+ * Email incluido en req
  */
 router.get(
   '/',
+  [query('userId')],
+  fieldsValidator,
   rolValidator([
     'SuperAdmin',
     'Treasurer',
@@ -39,7 +40,7 @@ router.post(
     body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
     body('address').isString(),
     body('mobile').isString(),
-    body('phone').isString(),
+    body('phone'),
     body('photoURL'),
   ],
   fieldsValidator,
