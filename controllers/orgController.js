@@ -33,8 +33,6 @@ async function createOrUpdateOrg(req, res, next) {
           formatoResponse('success', org, 'Organization created successfully')
         );
     } else {
-      console.log(data);
-
       // Verifica si el presidente existe como usuario
       const user = await User.findById(data.president);
       if (!user) return next(createError(400, 'President does not exist'));
@@ -44,9 +42,7 @@ async function createOrUpdateOrg(req, res, next) {
 
       // Buscar si el usuario tiene asignada la organización en la que
       // quedará como presidente
-      const orgInUser = user.organizations.filter(
-        org => org._id === data.orgId
-      );
+      const orgInUser = user.organizations.filter(org => org._id == data.orgId);
 
       // Si no la tiene asignada se la asigna
       if (orgInUser.length === 0) {
