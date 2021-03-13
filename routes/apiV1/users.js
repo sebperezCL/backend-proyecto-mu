@@ -42,6 +42,7 @@ router.post(
     body('mobile'),
     body('phone'),
     body('photoURL'),
+    body('orgs'),
   ],
   fieldsValidator,
   rolValidator([

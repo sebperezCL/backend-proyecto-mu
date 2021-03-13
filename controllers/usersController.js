@@ -15,7 +15,7 @@ async function createOrUpdateUser(req, res, next) {
     // Comprobacion del body de User.
     const data = matchedData(req);
 
-    const { email, address, mobile, phone } = data;
+    const { email, address, mobile, phone, orgs } = data;
 
     //? Sólo el SuperAdmin puede crear o actualizar otros email de los usuarios
     if (req.userData.email !== email && req.userData.role !== 'SuperAdmin') {
@@ -27,6 +27,27 @@ async function createOrUpdateUser(req, res, next) {
     if (!usuario) {
       usuario = new User(data);
     } else {
+      // Si viene el objeto con las organizaciones desde el front
+      // Entonces hay que actualizar la asignación en el objeto usuario
+      if (orgs.length === 0) {
+        // Si el objeto viene vacío significa que se eliminan todas las asignaciones
+        usuario.organizations = [];
+      } else {
+        const orgsFinales = [];
+        orgs.map(org => {
+          const orgsUsuario = usuario.organizations.filter(
+            o => o._id === org.value
+          );
+
+          if (orgsUsuario.length === 0) {
+            orgsFinales.push({ name: org.label, _id: org.value });
+          } else {
+            orgsFinales.push(orgsUsuario[0]);
+          }
+        });
+        usuario.organizations = orgsFinales;
+      }
+
       usuario.displayName = data.displayName;
       usuario.firstSurname = data.firstSurname;
       usuario.secondSurname = data.secondSurname;
