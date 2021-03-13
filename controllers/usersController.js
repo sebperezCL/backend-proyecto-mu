@@ -123,9 +123,9 @@ async function getUser(req, res, next) {
 
 async function getAllUsers(req, res, next) {
   try {
-    const users = await User.find().select(
-      'displayName firstSurname secondSurname'
-    );
+    const users = await User.find()
+      .select('displayName firstSurname secondSurname email')
+      .sort('displayName');
     res
       .status(200)
       .json(formatoResponse('success', users, 'Usuario activado con éxito'));
