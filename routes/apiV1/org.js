@@ -17,16 +17,26 @@ router.post(
     body('address', 'Indicate the address').notEmpty(),
     body('province', 'Indicate the province').notEmpty(),
     body('president', 'Indicate the president').notEmpty(),
+    body('treasurer'),
+    body('secretary'),
     body('photoURL'),
   ],
   fieldsValidator,
-  rolValidator(['SuperAdmin']),
+  rolValidator(['SuperAdmin', 'President']),
   orgController.createOrUpdateOrg
+);
+
+router.get(
+  '/users',
+  [body('orgId')],
+  fieldsValidator,
+  rolValidator(['SuperAdmin', 'Treasurer', 'President', 'Secretary']),
+  orgController.getUsersFromOrg
 );
 
 router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
-router.get('/:_id', orgController.getOrgsById);
+router.get('/:_id?', orgController.getOrgsById);
 
 router.delete(
   '/:_id',

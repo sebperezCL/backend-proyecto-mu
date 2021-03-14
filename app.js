@@ -8,8 +8,11 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/apiV1/users');
 const orgRouter = require('./routes/apiV1/org');
-const rolValidator = require('./lib/middlewares/rolValidator');
+
+// Middlewares
 const tokenDecode = require('./lib/middlewares/tokenDecode');
+const setUser = require('./lib/middlewares/setUser');
+const orgValidator = require('./lib/middlewares/orgValidator');
 
 const app = express();
 
@@ -37,9 +40,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(tokenDecode)
+app.use(tokenDecode);
+app.use(setUser);
 app.use('/apiV1/user', usersRouter);
-app.use('/apiV1/org', rolValidator(['SuperAdmin']), orgRouter);
+app.use('/apiV1/org', orgValidator, orgRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
