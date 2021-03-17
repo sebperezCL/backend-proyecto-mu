@@ -29,7 +29,7 @@ async function createOrUpdateUser(req, res, next) {
     } else {
       // Si viene el objeto con las organizaciones desde el front
       // Entonces hay que actualizar la asignación en el objeto usuario
-      if (orgs.length === 0) {
+      if (!orgs || orgs.length === 0) {
         // Si el objeto viene vacío significa que se eliminan todas las asignaciones
         usuario.organizations = [];
       } else {
