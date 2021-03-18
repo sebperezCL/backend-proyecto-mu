@@ -71,6 +71,40 @@ const orgSchema = mongoose.Schema({
   ],
 });
 
+orgSchema.methods.setFee = function (year, description, amount, defaultFee) {
+  if (!this.fiscalYear) this.fiscalYear = [];
+  const periodo = this.fiscalYear.filter(fy => fy.year === parseInt(year));
+  // Si existe el periodo le agrega una nueva cuota
+  if (periodo[0]) {
+    if (defaultFee) {
+      periodo[0].feePerYear.forEach(fee => {
+        fee.defaultFee = false;
+      });
+    }
+    periodo[0].feePerYear.push({
+      description: description,
+      amount: parseInt(amount),
+      defaultFee: defaultFee,
+    });
+    //console.log(periodo[0]);
+    return;
+  }
+
+  // Si no existe entonces crea el periodo con la cuota nueva
+  const fee = {
+    year: year,
+    feePerYear: [
+      {
+        description: description,
+        amount: parseInt(amount),
+        defaultFee: defaultFee,
+      },
+    ],
+  };
+  this.fiscalYear.push(fee);
+  return;
+};
+
 const Org = mongoose.model('Org', orgSchema);
 
 module.exports = Org;

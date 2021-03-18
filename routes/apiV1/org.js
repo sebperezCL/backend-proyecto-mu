@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const rolValidator = require('../../lib/middlewares/rolValidator');
@@ -34,9 +34,40 @@ router.get(
   orgController.getUsersFromOrg
 );
 
+router.get(
+  '/fee/',
+  [
+    query('orgId'),
+    query('year', 'Year must be a number and not empty').isNumeric().notEmpty(),
+  ],
+  fieldsValidator,
+  rolValidator(['SuperAdmin', 'Treasurer']),
+  orgController.getFeesOrg
+);
+
+router.post(
+  '/fee/',
+  [
+    body('orgId'),
+    body('year', 'Year must be a number and not empty').isNumeric().notEmpty(),
+    body('amount', 'Amount must be a number and not empty')
+      .isNumeric()
+      .notEmpty(),
+    body('desc'),
+    body('defaultFee', 'Must indicate if is default fee').notEmpty(),
+  ],
+  fieldsValidator,
+  rolValidator(['SuperAdmin', 'Treasurer']),
+  orgController.setFeeOrg
+);
+
 router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
-router.get('/:_id?', orgController.getOrgsById);
+router.get(
+  '/:_id?',
+  rolValidator(['SuperAdmin', 'President']),
+  orgController.getOrgsById
+);
 
 router.delete(
   '/:_id',
