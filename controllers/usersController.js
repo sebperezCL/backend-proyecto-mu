@@ -48,6 +48,7 @@ async function createOrUpdateUser(req, res, next) {
         usuario.organizations = orgsFinales;
       }
 
+      usuario.role = data.role;
       usuario.displayName = data.displayName;
       usuario.firstSurname = data.firstSurname;
       usuario.secondSurname = data.secondSurname;
