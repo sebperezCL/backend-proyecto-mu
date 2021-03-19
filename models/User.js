@@ -86,7 +86,7 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.virtual('fullName').get(function () {
-  return `${this.displayName} ${this.firstSurname} ${this.secondSurname}`;
+  return `${this.displayName.trim()} ${this.firstSurname.trim()} ${this.secondSurname.trim()}`;
 });
 
 const User = mongoose.model('User', userSchema);

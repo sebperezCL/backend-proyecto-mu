@@ -66,7 +66,10 @@ async function getAllOrgs(req, res, next) {
 async function getOrgsById(req, res, next) {
   try {
     const orgId = req.params._id || req.headers['x-orgid'];
-    const org = await Org.findById(orgId);
+    const org = await Org.findById(orgId)
+      .populate('president', 'displayName firstSurname secondSurname id email')
+      .populate('treasurer', 'displayName firstSurname secondSurname id email')
+      .populate('secretary', 'displayName firstSurname secondSurname id email');
     res.status(200).json(formatoResponse('success', org, 'Exito'));
   } catch (error) {
     return next(createError(500, error.message));

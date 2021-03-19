@@ -65,7 +65,7 @@ router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
 router.get(
   '/:_id?',
-  rolValidator(['SuperAdmin', 'President']),
+  rolValidator(['SuperAdmin', 'President', 'Treasurer', 'Secretary', 'Member']),
   orgController.getOrgsById
 );
 
