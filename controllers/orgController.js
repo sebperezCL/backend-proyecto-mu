@@ -190,6 +190,42 @@ const setFeeOrg = async (req, res, next) => {
   }
 };
 
+const deleteFeeOrg = async (req, res, next) => {
+  try {
+    const data = matchedData(req);
+    console.log(req.body);
+    if (data.orgId && req.userData.role !== 'SuperAdmin') {
+      //? Sólo el SuperAdmin puede obtener los usuarios de cualquier organización
+      return next(createError(401, 'Forbidden'));
+    }
+    const orgId = data.orgId || req.headers['x-orgid'];
+
+    if (!orgId) {
+      return next(
+        createError(400, 'Must indicate the orgId in header or body')
+      );
+    }
+    console.log(data);
+    const org = await Org.findById(orgId);
+
+    if (org) {
+      const fees = org.fiscalYear.filter(fy => fy.year === parseInt(data.year));
+      if (fees.length > 0) {
+        fees[0].feePerYear.id(data.feeId).remove();
+        org.save();
+        return res
+          .status(200)
+          .json(formatoResponse('success', fees[0].feePerYear, 'Exito'));
+      }
+
+      return res.status(200).json(formatoResponse('success', [], 'Exito'));
+    }
+    return next(createError(400, 'Organization does not exist'));
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+};
+
 module.exports = {
   createOrUpdateOrg,
   getAllOrgs,
@@ -198,4 +234,5 @@ module.exports = {
   getUsersFromOrg,
   getFeesOrg,
   setFeeOrg,
+  deleteFeeOrg,
 };

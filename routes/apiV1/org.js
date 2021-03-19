@@ -70,6 +70,17 @@ router.get(
 );
 
 router.delete(
+  '/fee',
+
+  body('orgId'),
+  body('year', 'Year must be a number and not empty').isNumeric().notEmpty(),
+  body('feeId', 'Fee Id must be not empty').notEmpty(),
+  fieldsValidator,
+  rolValidator(['SuperAdmin']),
+  orgController.deleteFeeOrg
+);
+
+router.delete(
   '/:_id',
   rolValidator(['SuperAdmin']),
   orgController.deleteOrgsById
