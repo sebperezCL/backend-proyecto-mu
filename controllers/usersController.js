@@ -48,12 +48,12 @@ async function createOrUpdateUser(req, res, next) {
         usuario.organizations = orgsFinales;
       }
 
-      usuario.role = data.role;
       usuario.displayName = data.displayName;
       usuario.firstSurname = data.firstSurname;
       usuario.secondSurname = data.secondSurname;
       usuario.fiscalNumber = data.fiscalNumber;
       usuario.photoURL = data.photoURL;
+      usuario.role = data.role;
     }
 
     if (address) usuario.contact.address = address;
