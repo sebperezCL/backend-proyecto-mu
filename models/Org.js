@@ -46,13 +46,18 @@ const orgSchema = mongoose.Schema({
       ],
       payment: [
         {
-          user: String,
-          id: Number,
+          id: mongoose.Schema.Types.ObjectId,
+          userName: String,
+          userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+          },
           date: Date,
           amount: Number,
           paymentMethod: String,
           checkNumber: String,
           bank: String,
+          message: String,
         },
       ],
       expense: [

@@ -71,6 +71,7 @@ const userSchema = mongoose.Schema(
                 paymentMethod: String,
                 bank: String,
                 checkNumber: String,
+                message: String,
               },
             ],
           },

@@ -61,6 +61,22 @@ router.post(
   orgController.setFeeOrg
 );
 
+router.post(
+  '/payment/',
+  [
+    body('orgId'),
+    body('year', 'Year must be a number and not empty').isNumeric().notEmpty(),
+    body('amount', 'Amount must be a number and not empty')
+      .isNumeric()
+      .notEmpty(),
+    body('desc'),
+    body('defaultFee', 'Must indicate if is default fee').notEmpty(),
+  ],
+  fieldsValidator,
+  rolValidator(['SuperAdmin', 'Treasurer']),
+  orgController.setFeeOrg
+);
+
 router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
 
 router.get(
