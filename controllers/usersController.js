@@ -53,6 +53,7 @@ async function createOrUpdateUser(req, res, next) {
       usuario.secondSurname = data.secondSurname;
       usuario.fiscalNumber = data.fiscalNumber;
       usuario.photoURL = data.photoURL;
+      usuario.role = data.role;
     }
 
     if (address) usuario.contact.address = address;

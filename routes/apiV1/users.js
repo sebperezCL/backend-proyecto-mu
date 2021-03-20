@@ -37,6 +37,7 @@ router.post(
     body('displayName', 'Indicate the names of the user').notEmpty(),
     body('firstSurname', 'Indicate the first surname of the user').notEmpty(),
     body('secondSurname'),
+    body('role'),
     body('fiscalNumber', "Indicate the user's fiscal id").notEmpty(),
     body('address'),
     body('mobile'),
