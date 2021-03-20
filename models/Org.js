@@ -46,14 +46,14 @@ const orgSchema = mongoose.Schema({
       ],
       payment: [
         {
-          id: mongoose.Schema.Types.ObjectId,
           userName: String,
           userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
+            required: true,
           },
-          date: Date,
-          amount: Number,
+          date: { type: String, required: true },
+          amount: { type: Number, required: true },
           paymentMethod: String,
           checkNumber: String,
           bank: String,
@@ -108,6 +108,20 @@ orgSchema.methods.setFee = function (year, description, amount, defaultFee) {
   };
   this.fiscalYear.push(fee);
   return;
+};
+
+orgSchema.methods.setPayment = function (data) {
+  const { year, desc, date, amount, userId } = data;
+  const fiscalYear = this.fiscalYear.filter(fy => fy.year === parseInt(year));
+  if (fiscalYear.length > 0) {
+    fiscalYear[0].payment.push({
+      userId,
+      date,
+      message: desc,
+      amount,
+    });
+  }
+  //console.log(fiscalYear[0]);
 };
 
 const Org = mongoose.model('Org', orgSchema);

@@ -66,7 +66,7 @@ const userSchema = mongoose.Schema(
             payment: [
               {
                 paymentId: Number,
-                date: Date,
+                date: String,
                 amount: Number,
                 paymentMethod: String,
                 bank: String,
@@ -89,6 +89,27 @@ const userSchema = mongoose.Schema(
 userSchema.virtual('fullName').get(function () {
   return `${this.displayName.trim()} ${this.firstSurname.trim()} ${this.secondSurname.trim()}`;
 });
+
+userSchema.methods.setPayment = function (data, orgId) {
+  const { year, desc, date, amount, userId } = data;
+
+  const org = this.organizations.filter(
+    o => o._id.toString() === orgId.toString()
+  );
+
+  console.log(org);
+
+  if (org[0]) {
+    const fiscalYear = org[0].fiscalYear.filter(
+      fy => fy.year === parseInt(year)
+    );
+    // TODO Falta controlar en el front para que mande la cuota establecida del usuario
+    // TODO Falta calcular en el front los totales pagados
+    console.log(fiscalYear);
+    return;
+  }
+  return console.log('error');
+};
 
 const User = mongoose.model('User', userSchema);
 

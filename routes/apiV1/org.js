@@ -4,6 +4,7 @@ const { body, query } = require('express-validator');
 
 const fieldsValidator = require('../../lib/middlewares/fieldsValidators');
 const rolValidator = require('../../lib/middlewares/rolValidator');
+const putOrgInReq = require('../../lib/middlewares/putOrgInReq');
 const orgController = require('../../controllers/orgController');
 
 router.post(
@@ -42,6 +43,7 @@ router.get(
   ],
   fieldsValidator,
   rolValidator(['SuperAdmin', 'Treasurer']),
+  putOrgInReq,
   orgController.getFeesOrg
 );
 
@@ -58,6 +60,7 @@ router.post(
   ],
   fieldsValidator,
   rolValidator(['SuperAdmin', 'Treasurer']),
+  putOrgInReq,
   orgController.setFeeOrg
 );
 
@@ -65,16 +68,18 @@ router.post(
   '/payment/',
   [
     body('orgId'),
+    body('userId', 'userId must be not empty').notEmpty(),
     body('year', 'Year must be a number and not empty').isNumeric().notEmpty(),
     body('amount', 'Amount must be a number and not empty')
       .isNumeric()
       .notEmpty(),
     body('desc'),
-    body('defaultFee', 'Must indicate if is default fee').notEmpty(),
+    body('date', 'userId must be not empty').notEmpty(),
   ],
   fieldsValidator,
   rolValidator(['SuperAdmin', 'Treasurer']),
-  orgController.setFeeOrg
+  putOrgInReq,
+  orgController.setPayment
 );
 
 router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
@@ -93,6 +98,7 @@ router.delete(
   body('feeId', 'Fee Id must be not empty').notEmpty(),
   fieldsValidator,
   rolValidator(['SuperAdmin']),
+  putOrgInReq,
   orgController.deleteFeeOrg
 );
 
