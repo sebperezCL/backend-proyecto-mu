@@ -66,10 +66,18 @@ async function getAllOrgs(req, res, next) {
 async function getOrgsById(req, res, next) {
   try {
     const orgId = req.params._id || req.headers['x-orgid'];
-    const org = await Org.findById(orgId)
+    const query = Org.findById(orgId)
       .populate('president', 'displayName firstSurname secondSurname id email')
       .populate('treasurer', 'displayName firstSurname secondSurname id email')
       .populate('secretary', 'displayName firstSurname secondSurname id email');
+    const {
+      userData: { role },
+    } = req;
+    console.log(role);
+    if (role === 'Member') {
+      query.select('-fiscalYear');
+    }
+    const org = await query.exec();
     res.status(200).json(formatoResponse('success', org, 'Exito'));
   } catch (error) {
     return next(createError(500, error.message));
@@ -198,9 +206,14 @@ const setPayment = async (req, res, next) => {
       const user = await User.findById(data.userId);
       if (!user) return next(createError(400, 'User not found'));
 
-      user.setPayment(data, org._id);
-      org.setPayment(data);
-      return res.status(200).json(formatoResponse('success', org, 'Exito'));
+      const paymentId = org.setPayment(data, user);
+      if (paymentId) {
+        user.setPayment(data, org, paymentId);
+        await user.save();
+        await org.save();
+        return res.status(200).json(formatoResponse('success', org, 'Exito'));
+      }
+      return next(createError(400, 'Error inserting new payment'));
     }
     return next(createError(400, 'Organization does not exist'));
   } catch (error) {

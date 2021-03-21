@@ -54,10 +54,11 @@ const orgSchema = mongoose.Schema({
           },
           date: { type: String, required: true },
           amount: { type: Number, required: true },
-          paymentMethod: String,
-          checkNumber: String,
+          paymentMethod: { type: String, required: true },
           bank: String,
+          checkNumber: String,
           message: String,
+          dueDate: String, // Sólo si paga con cheque es necesario
         },
       ],
       expense: [
@@ -110,18 +111,39 @@ orgSchema.methods.setFee = function (year, description, amount, defaultFee) {
   return;
 };
 
-orgSchema.methods.setPayment = function (data) {
-  const { year, desc, date, amount, userId } = data;
-  const fiscalYear = this.fiscalYear.filter(fy => fy.year === parseInt(year));
-  if (fiscalYear.length > 0) {
-    fiscalYear[0].payment.push({
-      userId,
-      date,
+orgSchema.methods.setPayment = function (data, user) {
+  const {
+    year,
+    amount,
+    desc,
+    date,
+    dueDate,
+    bank,
+    checkNumber,
+    paymentMethod,
+  } = data;
+
+  // Buscar el año fiscal correspondiente en la organización
+  const fiscalYear = this.fiscalYear.find(fy => fy.year === parseInt(year));
+
+  if (fiscalYear) {
+    // insertar el nuevo pago
+    const id = mongoose.Types.ObjectId();
+    fiscalYear.payment.push({
+      _id: id,
+      userName: user.fullName,
+      userId: user._id,
+      date: date,
+      amount: amount,
+      paymentMethod: paymentMethod,
+      bank: bank,
+      checkNumber: checkNumber,
       message: desc,
-      amount,
+      dueDate: dueDate,
     });
+    return id;
   }
-  //console.log(fiscalYear[0]);
+  return null;
 };
 
 const Org = mongoose.model('Org', orgSchema);
