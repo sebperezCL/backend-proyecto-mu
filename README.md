@@ -1,5 +1,7 @@
 <h1 align="center">Práctica Final Nº10 Proyecto: Mu – Sistema eGestión 👋</h1>
 
+<br>
+
 > Backend on NodeJs, Express egestion
 
 <br>
@@ -92,15 +94,13 @@ npm run dev
 
 <br>
 
-<center>
-
-![](https://raw.githubusercontent.com/sebperezCL/backend-proyecto-mu/master/visualPatterns/Opciones_de_autenticacion_-_MU.jpg)
-
-</center>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sebperezCL/backend-proyecto-mu/master/visualPatterns/Opciones_de_autenticacion_-_MU.jpg">
+</p>
 
 <br>
 
-## 2️⃣ Frontend on REACT(first terminal) 🔨
+## 2️⃣ Frontend on REACT (first terminal) 🔨
 
 <br>
 
