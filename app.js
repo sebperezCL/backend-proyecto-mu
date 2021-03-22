@@ -40,6 +40,26 @@ app.use((req, res, next) => {
   next();
 });
 
+app.post('/test/sender/mail', async (req, res, next) => {
+  const {} = req.body;
+  const sendEmail = require('./lib/clientEmailSender/clientEmailSender');
+  try {
+    await sendEmail(
+      JSON.stringify({
+        to: 'antunez19@gmail.com',
+        from: 'luissanchez_1992@hotmail.com',
+        templateId: process.env.EMAIL_CONTACT,
+        dynamicTemplateData: {
+          rol: 'Capitan de Mundo',
+          user: 'Capitan jabugo',
+          email: 'correo@capitanjabugo.com',
+          mobile: 258258258,
+          message: 'Me debes 6000 pts de Whisky',
+        },
+      })
+    );
+  } catch (error) { res.statusCode(500).json({error: error})}
+});
 app.use(tokenDecode);
 app.use(setUser);
 app.use('/apiV1/user', usersRouter);
