@@ -27,7 +27,11 @@ router.get(
   usersController.getUser
 );
 
-router.get('/all', rolValidator(['SuperAdmin']), usersController.getAllUsers);
+router.get(
+  '/all/:orgId?',
+  rolValidator(['SuperAdmin']),
+  usersController.getAllUsers
+);
 
 router.post(
   '/',

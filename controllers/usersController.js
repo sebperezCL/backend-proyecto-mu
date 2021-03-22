@@ -25,6 +25,7 @@ async function createOrUpdateUser(req, res, next) {
     let usuario = await User.findOne({ email: email });
 
     if (!usuario) {
+      if (data.role === 'NotRegistered') data.role = 'Member';
       usuario = new User(data);
     } else {
       // Si viene el objeto con las organizaciones desde el front
@@ -125,12 +126,14 @@ async function getUser(req, res, next) {
     const data = matchedData(req);
     let user;
     if (data.userId) {
-      if (req.userData.role === 'SuperAdmin') {
+      if (req.userData.role !== 'Member') {
         user = await User.findById(data.userId);
       }
     } else {
       user = await User.findOne({ email: req.userData.email });
     }
+
+    console.log(user);
 
     if (!user) {
       return res
@@ -155,7 +158,14 @@ async function getUser(req, res, next) {
 
 async function getAllUsers(req, res, next) {
   try {
-    const users = await User.find()
+    const orgId = req.params.orgId;
+    console.log(orgId);
+    let where = {};
+
+    if (orgId) {
+      where['organizations._id'] = orgId;
+    }
+    const users = await User.find(where)
       .select('displayName firstSurname secondSurname email')
       .sort('displayName');
     res

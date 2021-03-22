@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const User = require('./User');
 
 const orgSchema = mongoose.Schema({
   // orgId: {
@@ -92,7 +93,6 @@ orgSchema.methods.setFee = function (year, description, amount, defaultFee) {
       amount: parseInt(amount),
       defaultFee: defaultFee,
     });
-    //console.log(periodo[0]);
     return;
   }
 
@@ -144,6 +144,25 @@ orgSchema.methods.setPayment = function (data, user) {
     return id;
   }
   return null;
+};
+
+orgSchema.methods.deletePayment = async function (year, paymentId) {
+  const fiscalYearOrg = this.fiscalYear.find(fy => fy.year === parseInt(year));
+  const paymentOrg = fiscalYearOrg.payment.id(paymentId);
+  try {
+    const user = await User.findById(paymentOrg.userId);
+    const fiscalYearUser = user.organizations
+      .find(org => org._id.toString() === this._id.toString())
+      ?.fiscalYear.find(fy => fy.year === parseInt(year));
+
+    fiscalYearUser.payment.id(paymentId).remove();
+    fiscalYearOrg.payment.id(paymentId).remove();
+
+    await user.save();
+    await this.save();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const Org = mongoose.model('Org', orgSchema);

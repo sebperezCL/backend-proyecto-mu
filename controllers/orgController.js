@@ -211,9 +211,32 @@ const setPayment = async (req, res, next) => {
         user.setPayment(data, org, paymentId);
         await user.save();
         await org.save();
-        return res.status(200).json(formatoResponse('success', org, 'Exito'));
+        return res
+          .status(200)
+          .json(formatoResponse('success', org.fiscalYear, 'Exito'));
       }
       return next(createError(400, 'Error inserting new payment'));
+    }
+    return next(createError(400, 'Organization does not exist'));
+  } catch (error) {
+    return next(createError(500, error.message));
+  }
+};
+
+const deletePayment = async (req, res, next) => {
+  try {
+    const { paymentId, year } = req.params;
+    const org = req.org;
+
+    if (org) {
+      await org.deletePayment(year, paymentId);
+      //await org.save();
+
+      return res
+        .status(200)
+        .json(formatoResponse('success', org.fiscalYear, 'Exito'));
+
+      //return next(createError(400, 'Error inserting new payment'));
     }
     return next(createError(400, 'Organization does not exist'));
   } catch (error) {
@@ -231,4 +254,5 @@ module.exports = {
   setFeeOrg,
   deleteFeeOrg,
   setPayment,
+  deletePayment,
 };

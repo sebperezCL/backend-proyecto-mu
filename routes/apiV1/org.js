@@ -65,7 +65,7 @@ router.post(
 );
 
 router.post(
-  '/payment/',
+  '/payment',
   [
     body('orgId'),
     body('userId', 'userId must be not empty').notEmpty(),
@@ -85,6 +85,15 @@ router.post(
   rolValidator(['SuperAdmin', 'Treasurer']),
   putOrgInReq,
   orgController.setPayment
+);
+
+router.delete(
+  '/payment/:year/:paymentId',
+  [body('orgId')],
+  fieldsValidator,
+  rolValidator(['SuperAdmin', 'Treasurer']),
+  putOrgInReq,
+  orgController.deletePayment
 );
 
 router.get('/all', rolValidator(['SuperAdmin']), orgController.getAllOrgs);
