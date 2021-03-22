@@ -58,6 +58,7 @@ app.post('/test/sender/mail', async (req, res, next) => {
         },
       })
     );
+    res.end()
   } catch (error) { res.statusCode(500).json({error: error})}
 });
 app.use(tokenDecode);
