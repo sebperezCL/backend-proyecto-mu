@@ -48,7 +48,7 @@ app.post('/apiV1/test/sender/mail', async (req, res, next) => {
   try {
     const z = await sendEmail({
       to: 'antunez19@gmail.com',
-      from: 'no-reply@egestion.xyz',
+      from: 'talentmuteam@gmail.com',
       templateId: process.env.EMAIL_CONTACT,
       dynamicTemplateData: {
         rol: 'Capitan de Mundo',
