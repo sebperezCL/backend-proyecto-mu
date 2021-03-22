@@ -43,6 +43,8 @@ app.use((req, res, next) => {
 app.post('/apiV1/test/sender/mail', async (req, res, next) => {
   const {} = req.body;
   const sendEmail = require('./lib/clientEmailSender/clientEmailSender');
+  console.log('entra')
+  
   try {
     await sendEmail(
       JSON.stringify({
