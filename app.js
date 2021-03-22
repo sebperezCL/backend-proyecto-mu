@@ -46,7 +46,7 @@ app.post('/apiV1/test/sender/mail', async (req, res, next) => {
   console.log('entra')
   
   try {
-    await sendEmail(
+    const z = await sendEmail(
       JSON.stringify({
         to: 'antunez19@gmail.com',
         from: 'luissanchez_1992@hotmail.com',
@@ -60,6 +60,8 @@ app.post('/apiV1/test/sender/mail', async (req, res, next) => {
         },
       })
     );
+    console.log(z)
+    
     res.end()
   } catch (error) { res.statusCode(500).json({error: error})}
 });
