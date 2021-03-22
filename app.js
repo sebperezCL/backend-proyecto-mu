@@ -43,27 +43,27 @@ app.use((req, res, next) => {
 app.post('/apiV1/test/sender/mail', async (req, res, next) => {
   const {} = req.body;
   const sendEmail = require('./lib/clientEmailSender/clientEmailSender');
-  console.log('entra')
-  
+  console.log('entra');
+
   try {
-    const z = await sendEmail(
-      JSON.stringify({
-        to: 'antunez19@gmail.com',
-        from: 'luissanchez_1992@hotmail.com',
-        templateId: process.env.EMAIL_CONTACT,
-        dynamicTemplateData: {
-          rol: 'Capitan de Mundo',
-          user: 'Capitan jabugo',
-          email: 'correo@capitanjabugo.com',
-          mobile: 258258258,
-          message: 'Me debes 6000 pts de Whisky',
-        },
-      })
-    );
-    console.log(z)
-    
-    res.end()
-  } catch (error) { res.statusCode(500).json({error: error})}
+    const z = await sendEmail({
+      to: 'antunez19@gmail.com',
+      from: 'luissanchez_1992@hotmail.com',
+      templateId: process.env.EMAIL_CONTACT,
+      dynamicTemplateData: {
+        rol: 'Capitan de Mundo',
+        user: 'Capitan jabugo',
+        email: 'correo@capitanjabugo.com',
+        mobile: 258258258,
+        message: 'Me debes 6000 pts de Whisky',
+      },
+    });
+    console.log(z);
+
+    res.end();
+  } catch (error) {
+    res.statusCode(500).json({ error: error });
+  }
 });
 app.use(tokenDecode);
 app.use(setUser);
