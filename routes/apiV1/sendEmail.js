@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
 
     await sender({
       to: email,
-      templateId: type,
+      templateId: process.env[type],
       dynamicTemplateData: data,
     });
 
