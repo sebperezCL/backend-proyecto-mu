@@ -8,6 +8,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/apiV1/users');
 const orgRouter = require('./routes/apiV1/org');
+const senderMail = require('./routes/apiV1/sendEmail');
 
 // Middlewares
 const tokenDecode = require('./lib/middlewares/tokenDecode');
@@ -40,35 +41,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/apiV1/test/sender/mail', async (req, res, next) => {
-  const {} = req.body;
-  const sendEmail = require('./lib/clientEmailSender/clientEmailSender');
-  console.log('entra');
 
-  try {
-    const z = await sendEmail({
-      to: 'antunez19@gmail.com',
-      from: 'talentmuteam@gmail.com',
-      templateId: process.env.EMAIL_CONTACT,
-      dynamicTemplateData: {
-        rol: 'Capitan de Mundo',
-        user: 'Capitan jabugo',
-        email: 'correo@capitanjabugo.com',
-        mobile: 258258258,
-        message: 'Me debes 6000 pts de Whisky',
-      },
-    });
-    console.log(z);
-
-    res.end();
-  } catch (error) {
-    res.statusCode(500).json({ error: error });
-  }
-});
 app.use(tokenDecode);
 app.use(setUser);
 app.use('/apiV1/user', usersRouter);
 app.use('/apiV1/org', orgValidator, orgRouter);
+app.use('/apiV1/sender', senderMail);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
