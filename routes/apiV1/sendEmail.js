@@ -5,8 +5,7 @@ const sender = require('../../lib/clientEmailSender/clientEmailSender');
 const formatoResponse = require('../../lib/formatoResponse')
 
 router.post('/', async (req, res, next) => {
-  res.status(200).end()
-/*   try {
+  try {
     
     if (!(Object.keys(req.body).includes('email') && Object.keys(req.body).includes('type'))) {
       res.status(400).json(formatoResponse(400,'', 'Bad request', 'BADREQUEST'))
@@ -26,7 +25,7 @@ router.post('/', async (req, res, next) => {
   } catch (err) {
     next(err)
     console.log('error');
-  } */
+  }
 });
 
 module.exports = router;
