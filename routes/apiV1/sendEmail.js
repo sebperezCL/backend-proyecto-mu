@@ -6,13 +6,14 @@ const formatoResponse = require('../../lib/formatoResponse')
 
 router.post('/', async (req, res, next) => {
   try {
-
+    
     if (!(Object.keys(req.body).includes('email') && Object.keys(req.body).includes('type'))) {
       res.status(400).json(formatoResponse(400,'', 'Bad request', 'BADREQUEST'))
     }
-
+    
     const { email, type, ...data } = req.body;
-
+    
+    console.log(process.env[type])
     await sender({
       to: email,
       templateId: process.env[type],
