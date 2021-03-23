@@ -42,10 +42,10 @@ app.use((req, res, next) => {
 });
 
 
-/* app.use(tokenDecode);
+app.use(tokenDecode);
 app.use(setUser);
 app.use('/apiV1/user', usersRouter);
-app.use('/apiV1/org', orgValidator, orgRouter); */
+app.use('/apiV1/org', orgValidator, orgRouter);
 app.use('/apiV1/sender', senderMail);
 
 
