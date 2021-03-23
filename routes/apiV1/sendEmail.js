@@ -18,6 +18,8 @@ router.post('/', async (req, res, next) => {
       templateId: type,
       dynamicTemplateData: data,
     });
+
+    res.statusCode(200).end()
     
   } catch (err) {
     next(err)
