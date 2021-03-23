@@ -8,7 +8,7 @@ router.post('/', async (req, res, next) => {
   try {
 
     if (!(Object.keys(req.body).includes('email') && Object.keys(req.body).includes('type'))) {
-      res.statusCode(400).json(formatoResponse(400,'', 'Bad request', 'BADREQUEST'))
+      res.status(400).json(formatoResponse(400,'', 'Bad request', 'BADREQUEST'))
     }
 
     const { email, type, ...data } = req.body;
@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
       dynamicTemplateData: data,
     });
 
-    res.statusCode(200).end()
+    res.status(200).end()
     
   } catch (err) {
     next(err)
