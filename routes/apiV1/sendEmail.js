@@ -32,7 +32,7 @@ router.post('/', async (req, res, next) => {
 
     if (type === 'ADMIN') {
       console.log(process.env[type])
-      console.log(data.userEmail, 'kkkkkk')
+      console.log(...data.userEmail, 'kkkkkk')
       
       await sender({
         to: data.userEmail,
