@@ -30,7 +30,7 @@ router.post('/', async (req, res, next) => {
     }
 
 
-    if (type === 'INVOICE') {
+    if (type === 'ADMIN') {
       console.log(process.env[type])
       
       await sender({
