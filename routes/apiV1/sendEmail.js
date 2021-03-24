@@ -23,7 +23,7 @@ router.post('/', async (req, res, next) => {
       dynamicTemplateData: data,
     });
 
-    res.status(200).end()
+    res.status(200).json(formatoResponse(200, 'ok', 'ok', ''))
     
   } catch (err) {
     next(err)
