@@ -13,7 +13,6 @@ router.post('/', async (req, res, next) => {
     
     const { email, type, ...data } = req.body;
     
-    console.log(process.env[type])
     await sender({
       to: email,
       templateId: process.env[type],
