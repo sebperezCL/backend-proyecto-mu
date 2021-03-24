@@ -33,8 +33,7 @@ router.post('/', async (req, res, next) => {
 
     if (type === 'ADMIN') {
       console.log(process.env[type])
-      console.log(data.data.userEmail, 'kkkkkk')
-      
+
       await sender({
         to: data.data.userEmail,
         templateId: process.env[type],
@@ -68,7 +67,8 @@ router.post('/treasurer-income', async (req, res, next) => {
 
     try {
       result = await User.findById({ _id: req.body._id });
-
+      console.log(result, '-------->')
+      
       if (!result)
         return res
           .status(404)
