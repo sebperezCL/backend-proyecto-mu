@@ -38,7 +38,7 @@ router.post('/', async (req, res, next) => {
       await sender({
         to: data.data.userEmail,
         templateId: process.env[type],
-        dynamicTemplateData: z,
+        dynamicTemplateData: data,
       });
     }
 
