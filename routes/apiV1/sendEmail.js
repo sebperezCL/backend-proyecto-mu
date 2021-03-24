@@ -21,8 +21,8 @@ router.post('/', async (req, res, next) => {
     const { email, type, ...data } = req.body;
 
     if (type === 'CONTACT') {
-      console.log(data, 'kkkkkk')
-      console.log(process.env[type])
+      console.log(data, 'kkkkkk');
+      console.log(process.env[type]);
       await sender({
         to: email,
         templateId: process.env[type],
@@ -30,9 +30,8 @@ router.post('/', async (req, res, next) => {
       });
     }
 
-
     if (type === 'ADMIN') {
-      console.log(process.env[type])
+      console.log(process.env[type]);
 
       await sender({
         to: data.data.userEmail,
@@ -64,12 +63,12 @@ router.post('/treasurer-income', async (req, res, next) => {
     }
 
     const { _id, type, ...data } = req.body;
-    console.log(_id)
-    
+    console.log(_id);
+
     try {
-      result = await User.findById({ _id: req.body._id });
-      console.log(result, '-------->')
-      
+      result = await User.findOne({ _id: _id });
+      console.log(result, '-------->');
+
       if (!result)
         return res
           .status(404)
