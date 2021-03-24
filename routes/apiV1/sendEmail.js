@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
 
     if (type === 'CONTACT') {
       console.log(process.env[type])
-      return await sender({
+      await sender({
         to: email,
         templateId: process.env[type],
         dynamicTemplateData: data,
@@ -33,7 +33,7 @@ router.post('/', async (req, res, next) => {
     if (type === 'INVOICE') {
       console.log(process.env[type])
       
-      return await sender({
+      await sender({
         to: data.userEmail,
         templateId: process.env[type],
         dynamicTemplateData: data,
