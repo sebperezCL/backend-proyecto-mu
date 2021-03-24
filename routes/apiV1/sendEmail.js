@@ -62,7 +62,19 @@ router.post('/treasurer-income', async (req, res, next) => {
         .json(formatoResponse(400, 'Bad request', 'Campos erroneos', ''));
     }
 
-    const { userId, type, ...data } = req.body;
+    const {
+      mount,
+      bank,
+      checkNumber,
+      date,
+      dueDate,
+      message,
+      paymentMethod,
+      userId,
+      userName,
+      _id,
+      type,
+    } = req.body;
 
     try {
       result = await User.findById(userId);
@@ -86,10 +98,19 @@ router.post('/treasurer-income', async (req, res, next) => {
     await sender({
       to: result.email,
       templateId: process.env[type],
-      dynamicTemplateData: data,
+      dynamicTemplateData: {
+        userName: userName,
+        mount: mount,
+        bank: bank,
+        checkNumber: checkNumber,
+        date: date,
+        dueDate: dueDate,
+        message: message,
+        paymentMethod: paymentMethod,
+      },
     });
 
-    res.status(200).end();
+    res.status(200).json(formatoResponse(200, 'ok', 'ok', ''));
   } catch (err) {
     next(err);
     console.log('error');
