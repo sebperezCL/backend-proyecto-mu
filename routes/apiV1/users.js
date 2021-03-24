@@ -29,7 +29,7 @@ router.get(
 
 router.get(
   '/all/:orgId?',
-  rolValidator(['SuperAdmin']),
+  rolValidator(['SuperAdmin', 'Treasurer', 'President', 'Secretary']),
   usersController.getAllUsers
 );
 
