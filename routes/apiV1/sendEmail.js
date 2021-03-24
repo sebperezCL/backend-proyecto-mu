@@ -21,6 +21,7 @@ router.post('/', async (req, res, next) => {
     const { email, type, ...data } = req.body;
 
     if (type === 'CONTACT') {
+      console.log(process.env[type])
       return await sender({
         to: email,
         templateId: process.env[type],
@@ -30,7 +31,9 @@ router.post('/', async (req, res, next) => {
 
 
     if (type === 'INVOICE') {
-      await sender({
+      console.log(process.env[type])
+      
+      return await sender({
         to: data.userEmail,
         templateId: process.env[type],
         dynamicTemplateData: data,
