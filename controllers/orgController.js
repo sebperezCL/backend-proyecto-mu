@@ -230,7 +230,6 @@ const deletePayment = async (req, res, next) => {
 
     if (org) {
       await org.deletePayment(year, paymentId);
-      //await org.save();
 
       return res
         .status(200)
