@@ -31,7 +31,7 @@ router.post('/', async (req, res, next) => {
 
     if (type === 'INVOICE') {
       await sender({
-        to: data.email,
+        to: data.userEmail,
         templateId: process.env[type],
         dynamicTemplateData: data,
       });
