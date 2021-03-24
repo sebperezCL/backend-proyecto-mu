@@ -32,12 +32,11 @@ router.post('/', async (req, res, next) => {
 
 
     if (type === 'ADMIN') {
-      const z = data
       console.log(process.env[type])
-      console.log(z.userEmail, 'kkkkkk')
+      console.log(data.data.userEmail, 'kkkkkk')
       
       await sender({
-        to: z.userEmail,
+        to: data.data.userEmail,
         templateId: process.env[type],
         dynamicTemplateData: z,
       });
