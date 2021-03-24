@@ -66,7 +66,7 @@ router.post('/treasurer-income', async (req, res, next) => {
 
     try {
       result = await User.findById(userId);
-      console.log(result, '-------->');
+      console.log(result.email, '-------->');
 
       if (!result)
         return res
