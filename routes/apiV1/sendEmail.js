@@ -99,14 +99,16 @@ router.post('/treasurer-income', async (req, res, next) => {
       to: result.email,
       templateId: process.env[type],
       dynamicTemplateData: {
-        userName: userName,
-        mount: mount,
-        bank: bank,
-        checkNumber: checkNumber,
-        date: date,
-        dueDate: dueDate,
-        message: message,
-        paymentMethod: paymentMethod,
+        data: {
+          userName: userName,
+          mount: mount,
+          bank: bank,
+          checkNumber: checkNumber,
+          date: date,
+          dueDate: dueDate,
+          message: message,
+          paymentMethod: paymentMethod,
+        },
       },
     });
 
