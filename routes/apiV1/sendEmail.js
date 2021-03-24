@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const createError = require('http-errors');
 
 const sender = require('../../lib/clientEmailSender/clientEmailSender');
 const formatoResponse = require('../../lib/formatoResponse')
@@ -10,10 +11,11 @@ router.post('/', async (req, res, next) => {
   try {
     
     if (!(Object.keys(req.body).includes('email') && Object.keys(req.body).includes('type'))) {
-      return res.status(400).json(formatoResponse(400,'', 'Bad request', 'BADREQUEST'))
+      return next(createError(400,'', 'Bad request', 'BADREQUEST'))
     }
     
     const { email, type, ...data } = req.body;
+    console.log(req.body)
     
     await sender({
       to: email,
