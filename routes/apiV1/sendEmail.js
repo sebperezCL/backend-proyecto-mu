@@ -64,9 +64,9 @@ router.post('/treasurer-income', async (req, res, next) => {
 
     const { _id, type, ...data } = req.body;
     console.log(_id);
-
+    const v = '605b28ae4514f23ea23c294f'
     try {
-      const z = await User.findById(req.body._id);
+      const z = await User.findById(v);
       console.log(z, '-------->');
 
       if (!result)
