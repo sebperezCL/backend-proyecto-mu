@@ -62,12 +62,11 @@ router.post('/treasurer-income', async (req, res, next) => {
         .json(formatoResponse(400, 'Bad request', 'Campos erroneos', ''));
     }
 
-    const { _id, type, ...data } = req.body;
-    console.log(_id);
-    const v = '605b28ae4514f23ea23c294f'
+    const { userId, type, ...data } = req.body;
+
     try {
-      const z = await User.findById(v);
-      console.log(z, '-------->');
+      result = await User.findById(userId);
+      console.log(result, '-------->');
 
       if (!result)
         return res
