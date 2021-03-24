@@ -66,7 +66,6 @@ async function createOrUpdateUser(req, res, next) {
       .status(201)
       .json(formatoResponse('success', usuario, 'Usuario creado con éxito'));
   } catch (error) {
-    console.log(error, 'dentro del error');
     return next(createError(500, error.message));
   }
 }
@@ -133,8 +132,6 @@ async function getUser(req, res, next) {
       user = await User.findOne({ email: req.userData.email });
     }
 
-    console.log(user);
-
     if (!user) {
       return res
         .status(200) //! Deberia devolver 200, no 404
@@ -159,7 +156,6 @@ async function getUser(req, res, next) {
 async function getAllUsers(req, res, next) {
   try {
     const orgId = req.params.orgId;
-    console.log(orgId);
     let where = {};
 
     if (orgId) {
