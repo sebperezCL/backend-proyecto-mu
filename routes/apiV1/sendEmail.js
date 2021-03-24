@@ -21,6 +21,7 @@ router.post('/', async (req, res, next) => {
     const { email, type, ...data } = req.body;
 
     if (type === 'CONTACT') {
+      console.log(data, 'kkkkkk')
       console.log(process.env[type])
       await sender({
         to: email,
