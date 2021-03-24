@@ -78,7 +78,7 @@ async function enableUser(req, res, next) {
     const usuario = await User.findOne({ email: req.body.email });
 
     if (!usuario)
-      return next(createError(500, 'El usuario NO existe en la base de datos'));
+      return next(createError(404, 'El usuario NO existe en la base de datos'));
 
     usuario.activo = true;
     await usuario.save();
@@ -99,7 +99,7 @@ async function disableUser(req, res, next) {
     const usuario = await User.findOne({ email: req.body.email });
 
     if (!usuario)
-      return next(createError(500, 'El usuario NO existe en la base de datos'));
+      return next(createError(404, 'El usuario NO existe en la base de datos'));
 
     usuario.activo = false;
     await usuario.save();
