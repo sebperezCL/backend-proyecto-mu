@@ -58,7 +58,7 @@ router.post('/treasurer-income', async (req, res, next) => {
     }
 
     const {
-      mount,
+      amount,
       bank,
       checkNumber,
       date,
@@ -95,7 +95,7 @@ router.post('/treasurer-income', async (req, res, next) => {
       dynamicTemplateData: {
         data: {
           userName: userName,
-          mount: mount,
+          amount: amount,
           bank: bank,
           checkNumber: checkNumber,
           date: date,
