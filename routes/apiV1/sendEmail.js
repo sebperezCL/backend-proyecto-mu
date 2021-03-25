@@ -16,13 +16,10 @@ router.post('/', async (req, res, next) => {
     ) {
       return next(createError(400, '', 'Bad request', 'BADREQUEST'));
     }
-    console.log(req.body);
 
     const { email, type, ...data } = req.body;
 
     if (type === 'CONTACT') {
-      console.log(data, 'kkkkkk');
-      console.log(process.env[type]);
       await sender({
         to: email,
         templateId: process.env[type],
@@ -31,8 +28,6 @@ router.post('/', async (req, res, next) => {
     }
 
     if (type === 'ADMIN') {
-      console.log(process.env[type]);
-
       await sender({
         to: data.data.userEmail,
         templateId: process.env[type],
@@ -78,7 +73,6 @@ router.post('/treasurer-income', async (req, res, next) => {
 
     try {
       result = await User.findById(userId);
-      console.log(result.email, '-------->');
 
       if (!result)
         return res
